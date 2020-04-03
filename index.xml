@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home title on Megrez</title>
+    <link>https://ylroki.github.io/</link>
+    <description>Recent content in Home title on Megrez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://ylroki.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Build-in Shortcodes</title>
+      <link>https://ylroki.github.io/sample/build-in-shortcodes/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/sample/build-in-shortcodes/</guid>
+      <description>See https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes
+figure   2 People Sitting With View of Yellow Flowers during Daytime   gist  highlight &amp;lt;section id=&amp;#34;main&amp;#34;&amp;gt; &amp;lt;div&amp;gt; &amp;lt;h1 id=&amp;#34;title&amp;#34;&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt; {{ range .Data.Pages }} {{ .Render &amp;#34;summary&amp;#34;}} {{ end }} &amp;lt;/div&amp;gt; &amp;lt;/section&amp;gt; instagram    View this post on Instagram        #Talitha #Getty #yacht in #fjærland #fjærlandsfjorden #sognefjorden #mundal #norway #landscape #panorama #travel #instagoodmyphoto #justgoshoot #peoplescreatives #visualsoflife #photography #photoshoot #photodaily #photogram #instagood #picoftheday #fjærland #photooftheday #pentax #nrksf #sognavis</description>
+    </item>
+    
+    <item>
+      <title>Custom Shortcodes</title>
+      <link>https://ylroki.github.io/sample/custom-shortcodes/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/sample/custom-shortcodes/</guid>
+      <description>Alert panel Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+    </item>
+    
+    <item>
+      <title>Installation</title>
+      <link>https://ylroki.github.io/getting-started/installation/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/installation/</guid>
+      <description>Download Hugo theme If you have git installed, you can do the following at the command-line-interface within the Hugo directory:
+cd themes git clone https://github.com/thingsym/hugo-theme-techdoc.git For more information read the Hugo documentation.
+Configure You may specify options in config.toml (or config.yaml/config.json) of your site to make use of this theme&amp;rsquo;s features.
+For an example of config.toml, see config.toml in exampleSite.
+See the Configuration documentation.
+Preview site To preview your site, run Hugo&amp;rsquo;s built-in local server.</description>
+    </item>
+    
+    <item>
+      <title>Table of Contents</title>
+      <link>https://ylroki.github.io/sample/table-of-contents/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/sample/table-of-contents/</guid>
+      <description>Note The TableOfContents field set to true in your content’s front matter will render a table of contents.
+TableOfContents: true Setting the built-in .TableOfContents variables can configure what heading levels you want to include in TOC. See the built-in .TableOfContents variables settings
+  Section 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</description>
+    </item>
+    
+    <item>
+      <title>Hello_world</title>
+      <link>https://ylroki.github.io/posts/hello_world/</link>
+      <pubDate>Tue, 17 Oct 2017 14:00:45 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/posts/hello_world/</guid>
+      <description>aaaaaa
+vvvv
+aaa</description>
+    </item>
+    
+    <item>
+      <title>Configuration</title>
+      <link>https://ylroki.github.io/getting-started/configuration/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/configuration/</guid>
+      <description>You may specify options in config.toml (or config.yaml/config.json) of your site to make use of this theme’s features.
+For an example of config.toml, see config.toml in exampleSite.
+Params # Source Code repository section description = &amp;quot;put your description&amp;quot; github_repository = &amp;quot;https://github.com/thingsym/hugo-theme-techdoc&amp;quot; version = &amp;quot;0.9.0&amp;quot; # Documentation repository section # documentation repository (set edit link to documentation repository) github_doc_repository = &amp;quot;https://github.com/thingsym/hugo-theme-techdoc&amp;quot; # Analytic section google_analytics_id = &amp;quot;&amp;quot; # Your Google Analytics tracking id tag_manager_container_id = &amp;quot;&amp;quot; # Your Google Tag Manager container id google_site_verification = &amp;quot;&amp;quot; # Your Google Site Verification for Search Console # Open Graph and Twitter Cards settings section # Open Graph settings for each page are set on the front matter.</description>
+    </item>
+    
+    <item>
+      <title>Screenshot</title>
+      <link>https://ylroki.github.io/getting-started/screenshot/</link>
+      <pubDate>Sat, 26 Oct 2019 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/screenshot/</guid>
+      <description>Theme color Menu style Open Menu Slide Menu Edit link </description>
+    </item>
+    
+    <item>
+      <title>Creating a New Theme</title>
+      <link>https://ylroki.github.io/getting-started/creating-a-new-theme/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/creating-a-new-theme/</guid>
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>https://ylroki.github.io/getting-started/migrate-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/migrate-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>https://ylroki.github.io/getting-started/goisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/goisforlovers/</guid>
+      <description>Hugo uses the excellent Go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in Go templates.
+This document is a brief primer on using Go templates.</description>
+    </item>
+    
+    <item>
+      <title>About Hugo</title>
+      <link>https://ylroki.github.io/getting-started/about/</link>
+      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/about/</guid>
+      <description>Hugo is a static site engine written in Go. Here is Document.
+It makes use of a variety of open source projects including:
+ Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>Search Shortcode</title>
+      <link>https://ylroki.github.io/sample/search-shortcode/</link>
+      <pubDate>Mon, 30 Mar 2020 18:49:06 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/sample/search-shortcode/</guid>
+      <description>Note Search Shortcode powered by Algolia
+You can create a search page just by adding search shortcode.
+          var search = instantsearch({ indexName: &#39;hugo-demo-techdoc&#39;, searchClient: algoliasearch( &#39;7W4SAN4PLK&#39;, &#39;cbf12a63ff72d9c5dc0c10c195cf9128&#39; ), routing: true, }); const renderHits = (renderOptions, isFirstRender) = { const { hits } = renderOptions; document.querySelector(&#39;#hits&#39;).innerHTML = ` ${hits .map( item = `${ item.title }${ dayjs(item.lastmod).format(&#34;YYYY/MM/DD&#34;) } - ${ item.description ?</description>
+    </item>
+    
+  </channel>
+</rss>

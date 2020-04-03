@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting Started With Hugo on Megrez</title>
+    <link>https://ylroki.github.io/getting-started/</link>
+    <description>Recent content in Getting Started With Hugo on Megrez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Oct 2017 15:26:15 +0000</lastBuildDate>
+    
+	<atom:link href="https://ylroki.github.io/getting-started/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Installation</title>
+      <link>https://ylroki.github.io/getting-started/installation/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/installation/</guid>
+      <description>Download Hugo theme If you have git installed, you can do the following at the command-line-interface within the Hugo directory:
+cd themes git clone https://github.com/thingsym/hugo-theme-techdoc.git For more information read the Hugo documentation.
+Configure You may specify options in config.toml (or config.yaml/config.json) of your site to make use of this theme&amp;rsquo;s features.
+For an example of config.toml, see config.toml in exampleSite.
+See the Configuration documentation.
+Preview site To preview your site, run Hugo&amp;rsquo;s built-in local server.</description>
+    </item>
+    
+    <item>
+      <title>Configuration</title>
+      <link>https://ylroki.github.io/getting-started/configuration/</link>
+      <pubDate>Tue, 17 Oct 2017 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/configuration/</guid>
+      <description>You may specify options in config.toml (or config.yaml/config.json) of your site to make use of this theme’s features.
+For an example of config.toml, see config.toml in exampleSite.
+Params # Source Code repository section description = &amp;quot;put your description&amp;quot; github_repository = &amp;quot;https://github.com/thingsym/hugo-theme-techdoc&amp;quot; version = &amp;quot;0.9.0&amp;quot; # Documentation repository section # documentation repository (set edit link to documentation repository) github_doc_repository = &amp;quot;https://github.com/thingsym/hugo-theme-techdoc&amp;quot; # Analytic section google_analytics_id = &amp;quot;&amp;quot; # Your Google Analytics tracking id tag_manager_container_id = &amp;quot;&amp;quot; # Your Google Tag Manager container id google_site_verification = &amp;quot;&amp;quot; # Your Google Site Verification for Search Console # Open Graph and Twitter Cards settings section # Open Graph settings for each page are set on the front matter.</description>
+    </item>
+    
+    <item>
+      <title>Screenshot</title>
+      <link>https://ylroki.github.io/getting-started/screenshot/</link>
+      <pubDate>Sat, 26 Oct 2019 15:26:15 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/screenshot/</guid>
+      <description>Theme color Menu style Open Menu Slide Menu Edit link </description>
+    </item>
+    
+    <item>
+      <title>Creating a New Theme</title>
+      <link>https://ylroki.github.io/getting-started/creating-a-new-theme/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/creating-a-new-theme/</guid>
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>https://ylroki.github.io/getting-started/migrate-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/migrate-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>https://ylroki.github.io/getting-started/goisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/goisforlovers/</guid>
+      <description>Hugo uses the excellent Go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in Go templates.
+This document is a brief primer on using Go templates.</description>
+    </item>
+    
+    <item>
+      <title>About Hugo</title>
+      <link>https://ylroki.github.io/getting-started/about/</link>
+      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://ylroki.github.io/getting-started/about/</guid>
+      <description>Hugo is a static site engine written in Go. Here is Document.
+It makes use of a variety of open source projects including:
+ Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
+    </item>
+    
+  </channel>
+</rss>
