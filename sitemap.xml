@@ -8,6 +8,21 @@
   </url>
   
   <url>
+    <loc>https://ylroki.github.io/elasticsearch/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/mysql/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/haproxy/</loc>
+    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/sample/build-in-shortcodes/</loc>
     <lastmod>2017-10-17T15:26:15+00:00</lastmod>
   </url>
