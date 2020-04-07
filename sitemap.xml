@@ -3,8 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ylroki.github.io/common-tools/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/common-tools/string/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/kubernetes/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/common-tools/git/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/common-tools/markdown/</loc>
+    <lastmod>2020-04-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
