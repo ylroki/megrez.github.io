@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Hello_world - Megrez</title>
+<title>Vagrant - Megrez</title>
 <meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/posts/hello_world/">
+<link rel="canonical" href="https://ylroki.github.io/common-tools/vagrant/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,34 +16,19 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Hello_world" />
-<meta property="og:description" content="aaaaaa
-vvvv
-aaa" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://ylroki.github.io/posts/hello_world/" />
+<meta property="og:title" content="Vagrant" />
+<meta property="og:description" content="Personal Knowledge Management" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ylroki.github.io/common-tools/vagrant/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="article:published_time" content="2017-10-17T14:00:45+00:00" />
-<meta property="article:modified_time" content="2017-10-17T14:00:45+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:updated_time" content="2020-04-07T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Hello_world"/>
-<meta name="twitter:description" content="aaaaaa
-vvvv
-aaa"/>
-<meta itemprop="name" content="Hello_world">
-<meta itemprop="description" content="aaaaaa
-vvvv
-aaa">
-<meta itemprop="datePublished" content="2017-10-17T14:00:45&#43;00:00" />
-<meta itemprop="dateModified" content="2017-10-17T14:00:45&#43;00:00" />
-<meta itemprop="wordCount" content="3">
-<meta itemprop="image" content="https://ylroki.github.io/images/og-image.png"/>
-
-
-
-<meta itemprop="keywords" content="" /></head>
+<meta name="twitter:title" content="Vagrant"/>
+<meta name="twitter:description" content="Personal Knowledge Management"/>
+<meta itemprop="name" content="Vagrant">
+<meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
 
@@ -61,17 +46,36 @@ aaa">
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Hello_world</h1><p>aaaaaa</p>
-<p>vvvv</p>
-<p>aaa</p>
-<div class="edit-meta">
-Last updated on 17 Oct 2017
+<main><h1>Vagrant</h1><h2 id="getting-started">Getting Started</h2>
+<p>Vagrant use VirtualBox as default provider, but it seems not work at kernel 5.4+ now(2020-04-07).
+So use libvirt instead.
+<a href="https://codingpackets.com/blog/using-the-libvirt-provider-with-vagrant">https://codingpackets.com/blog/using-the-libvirt-provider-with-vagrant</a></p>
+<p>Install dependancy packages</p>
+<pre><code>sudo apt install -y qemu-kvm libvirt-bin
+sudo apt install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+sudo apt install -y virtinst
+</code></pre><p>Install vagrant</p>
+<pre><code>wget https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb
+sudo dpkg -i xxx.deb
+</code></pre><p>Install plugin</p>
+<pre><code>vagrant plugin install vagrant-libvirt
+</code></pre><p>Edit Vagrantfile</p>
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box_check_update = false
+  config.vm.box = &quot;generic/ubuntu1804&quot;
+  config.vm.define :node1 do |node1|
+  end
+end
+</code></pre><p>Run</p>
+<pre><code>vagrant up
+</code></pre><div class="edit-meta">
+Last updated on 7 Apr 2020
 
 
 <br>
-Published on 17 Oct 2017
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/posts/hello_world.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/posts/" title="Posts"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Posts</a>
-<a class="nav nav-next" href="https://ylroki.github.io/common-tools/" title="Common Tools">Next - Common Tools <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+Published on 7 Apr 2020
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/common-tools/vagrant/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/common-tools/string/" title="String Processing Tools"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - String Processing Tools</a>
+<a class="nav nav-next" href="https://ylroki.github.io/kubernetes/" title="Kubernetes">Next - Kubernetes <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -80,7 +84,7 @@ Published on 17 Oct 2017
 <ul>
 <li class=""><a href="https://ylroki.github.io">Home</a></li>
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/common-tools/">Common Tools<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/common-tools/">Common Tools<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
@@ -100,7 +104,7 @@ Published on 17 Oct 2017
   
 </li>
 
-<li class=""><a href="https://ylroki.github.io/common-tools/vagrant/">Vagrant</a>
+<li class="parent active"><a href="https://ylroki.github.io/common-tools/vagrant/">Vagrant</a>
   
 </li>
 </ul>
