@@ -46,10 +46,31 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Git</h1><h1 id="basic">Basic</h1>
+<main><h1>Git</h1><p><a href="https://git-scm.com/docs">https://git-scm.com/docs</a></p>
+<h1 id="basic">Basic</h1>
 <h1 id="branch">Branch</h1>
-<h1 id="remote">Remote</h1>
-<div class="edit-meta">
+<pre><code># list branch
+git branch -v
+
+# create branch
+git branch xxx
+
+# delete branch
+git branch -D xxx
+
+# working on branch
+git checkout xxx
+
+# merge xxx into current branch
+git merge xxx
+</code></pre><h1 id="remote">Remote</h1>
+<pre><code># list remote hosts
+git remote -v
+
+# add remote host
+git remote add xxx ssh://aaa.git
+
+</code></pre><div class="edit-meta">
 Last updated on 7 Apr 2020
 
 
