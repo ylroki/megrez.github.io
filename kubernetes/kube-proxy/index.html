@@ -48,13 +48,53 @@
 <div class="content-container">
 <main><h1>Kube Proxy</h1><h1 id="getting-started">Getting Started</h1>
 <p><a href="https://int32bit.me/2019/11/28/IPVS%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9Akube-proxy%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">https://int32bit.me/2019/11/28/IPVS%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9Akube-proxy%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</a></p>
-<div class="edit-meta">
+<h3 id="chain-prerouting-policy-accept">Chain PREROUTING (policy ACCEPT)</h3>
+<pre><code>target     prot opt source               destination         
+KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
+</code></pre><h3 id="chain-kube-services-2-references">Chain KUBE-SERVICES (2 references)</h3>
+<pre><code>target     prot opt source               destination         
+KUBE-LOAD-BALANCER  all  --  anywhere             anywhere             /* Kubernetes service lb portal */ match-set KUBE-LOAD-BALANCER dst,dst
+KUBE-MARK-MASQ  all  -- !10.150.0.0/15        anywhere             /* Kubernetes service cluster ip + port for masquerade purpose */ match-set KUBE-CLUSTER-IP dst,dst
+KUBE-MARK-MASQ  all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst
+ACCEPT     all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst PHYSDEV match ! --physdev-is-in ADDRTYPE match src-type !LOCAL
+ACCEPT     all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst ADDRTYPE match dst-type LOCAL
+KUBE-NODE-PORT  all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
+ACCEPT     all  --  anywhere             anywhere             match-set KUBE-CLUSTER-IP dst,dst
+ACCEPT     all  --  anywhere             anywhere             match-set KUBE-LOAD-BALANCER dst,dst
+</code></pre><h3 id="chain-input-policy-accept">Chain INPUT (policy ACCEPT)</h3>
+<pre><code>target     prot opt source               destination         
+</code></pre><h3 id="chain-output-policy-accept">Chain OUTPUT (policy ACCEPT)</h3>
+<pre><code>target     prot opt source               destination         
+KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
+</code></pre><h3 id="chain-postrouting-policy-accept">Chain POSTROUTING (policy ACCEPT)</h3>
+<pre><code>target     prot opt source               destination         
+KUBE-POSTROUTING  all  --  anywhere             anywhere             /* kubernetes postrouting rules */
+</code></pre><h3 id="chain-kube-load-balancer-1-references">Chain KUBE-LOAD-BALANCER (1 references)</h3>
+<pre><code>target     prot opt source               destination         
+RETURN     all  --  anywhere             anywhere             /* Kubernetes service load balancer ip + port with externalTrafficPolicy=local */ match-set KUBE-LOAD-BALANCER-LOCAL dst,dst
+KUBE-MARK-MASQ  all  --  anywhere             anywhere            
+</code></pre><h3 id="chain-kube-mark-drop-1-references">Chain KUBE-MARK-DROP (1 references)</h3>
+<pre><code>target     prot opt source               destination         
+MARK       all  --  anywhere             anywhere             MARK or 0x8000
+</code></pre><h3 id="chain-kube-mark-masq-4-references">Chain KUBE-MARK-MASQ (4 references)</h3>
+<pre><code>target     prot opt source               destination         
+MARK       all  --  anywhere             anywhere             MARK or 0x4000
+</code></pre><h3 id="chain-kube-node-port-1-references">Chain KUBE-NODE-PORT (1 references)</h3>
+<pre><code>target     prot opt source               destination         
+RETURN     tcp  --  anywhere             anywhere             /* Kubernetes nodeport TCP port with externalTrafficPolicy=local */ match-set KUBE-NODE-PORT-LOCAL-TCP dst
+KUBE-MARK-MASQ  tcp  --  anywhere             anywhere             /* Kubernetes nodeport TCP port for masquerade purpose */ match-set KUBE-NODE-PORT-TCP dst
+
+</code></pre><h3 id="chain-kube-postrouting-1-references">Chain KUBE-POSTROUTING (1 references)</h3>
+<pre><code>target     prot opt source               destination         
+MASQUERADE  all  --  anywhere             anywhere             /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
+MASQUERADE  all  --  anywhere             anywhere             /* Kubernetes endpoints dst ip:port, source ip for solving hairpin purpose */ match-set KUBE-LOOP-BACK dst,dst,src
+</code></pre><div class="edit-meta">
 Last updated on 8 Apr 2020
 
 
 <br>
 Published on 8 Apr 2020
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/kubernetes/kube-proxy/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/kubernetes/" title="Kubernetes"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Kubernetes</a>
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/kubernetes/kube-proxy/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/kubernetes/calico/" title="Kube Proxy"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Kube Proxy</a>
 <a class="nav nav-next" href="https://ylroki.github.io/kubernetes/docker/" title="Docker">Next - Docker <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
@@ -94,6 +134,10 @@ Published on 8 Apr 2020
 <li class="parent has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Kube Proxy</a>
+  
+</li>
 
 <li class="parent active"><a href="https://ylroki.github.io/kubernetes/kube-proxy/">Kube Proxy</a>
   
