@@ -47,15 +47,47 @@
 </div>
 <div class="content-container">
 <main><h1>Linux Commands</h1><h1 id="basic">Basic</h1>
-<p>Show version of kenerl, version of release.</p>
-<pre><code>uname -a
-lsb_release -a 
-</code></pre><h1 id="process">Process</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show version of kernel</span>
+$ uname -a
+<span style="color:#75715e"># Show version of release</span>
+$ lsb_release -a </code></pre></div>
+<h1 id="process">Process</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show all process</span>
+$ ps aux</code></pre></div>
 <h1 id="memory">Memory</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show memory</span>
+$ free -m</code></pre></div>
 <h1 id="network">Network</h1>
-<h1 id="cpu">CPU</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># ICMP</span>
+$ ping 192.168.1.1
+$ traceroute 192.168.1.1
+<span style="color:#75715e"># DNS</span>
+$ nslookup www.baidu.com
+$ dig www.baidu.com
+<span style="color:#75715e"># TCP</span>
+$ telnet 192.168.1.1 <span style="color:#ae81ff">80</span>
+<span style="color:#75715e"># Capture packets</span>
+$ tcpdump -iany -nA
+$ tcpdump -iany host 192.168.1.1
+$ tcpdump -iany port <span style="color:#ae81ff">80</span>
+<span style="color:#75715e"># Route Table</span>
+$ route -n 
+$ netstat -rn
+<span style="color:#75715e"># Network Interface</span>
+$ ifconfig
+$ ip addr
+<span style="color:#75715e"># TCP Connection</span>
+$ netstat -tp
+$ netstat -tlp
+<span style="color:#75715e"># Socket</span>
+$ lsof -i@192.168.1.1:80</code></pre></div>
 <h1 id="disk">Disk</h1>
-<h1 id="advanced">Advanced</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Filesystem</span>
+$ df
+<span style="color:#75715e"># Usage</span>
+$ du -h -d <span style="color:#ae81ff">1</span>
+<span style="color:#75715e"># List Open Files</span>
+$ lsof</code></pre></div>
 <div class="edit-meta">
 Last updated on 7 Apr 2020
 
@@ -103,7 +135,7 @@ Published on 7 Apr 2020
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Kube Proxy</a>
+<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Calico</a>
   
 </li>
 
@@ -135,6 +167,14 @@ Published on 7 Apr 2020
 </li>
 
 <li class=""><a href="https://ylroki.github.io/language/golang/">Golang</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/html-css-js/">Html CSS JavaScript</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/ruby/">Ruby</a>
   
 </li>
 </ul>

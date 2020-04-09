@@ -48,29 +48,37 @@
 <div class="content-container">
 <main><h1>Git</h1><p><a href="https://git-scm.com/docs">https://git-scm.com/docs</a></p>
 <h1 id="basic">Basic</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Initialize repository</span>
+$ git init
+<span style="color:#75715e"># Add modification</span>
+$ git add .
+<span style="color:#75715e"># Show Status</span>
+$ git status
+<span style="color:#75715e"># Commit</span>
+$ git commit .</code></pre></div>
 <h1 id="branch">Branch</h1>
-<pre><code># list branch
-git branch -v
-
-# create branch
-git branch xxx
-
-# delete branch
-git branch -D xxx
-
-# working on branch
-git checkout xxx
-
-# merge xxx into current branch
-git merge xxx
-</code></pre><h1 id="remote">Remote</h1>
-<pre><code># list remote hosts
-git remote -v
-
-# add remote host
-git remote add xxx ssh://aaa.git
-
-</code></pre><div class="edit-meta">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># List branch</span>
+$ git branch -v
+<span style="color:#75715e"># Create branch</span>
+$ git branch xxx
+<span style="color:#75715e"># Delete branch</span>
+$ git branch -D xxx
+<span style="color:#75715e"># Working on branch</span>
+$ git checkout xxx
+<span style="color:#75715e"># Merge xxx into current branch</span>
+$ git merge xxx</code></pre></div>
+<h1 id="remote">Remote</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Clone remote repository</span>
+$ git clone ssh://aaa.git
+<span style="color:#75715e"># List remote hosts</span>
+$ git remote -v
+<span style="color:#75715e"># Add remote host</span>
+$ git remote add xxx ssh://aaa.git
+<span style="color:#75715e"># Pull</span>
+$ git pull 
+<span style="color:#75715e"># Push</span>
+$ git push </code></pre></div>
+<div class="edit-meta">
 Last updated on 7 Apr 2020
 
 
@@ -117,7 +125,7 @@ Published on 7 Apr 2020
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Kube Proxy</a>
+<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Calico</a>
   
 </li>
 
@@ -149,6 +157,14 @@ Published on 7 Apr 2020
 </li>
 
 <li class=""><a href="https://ylroki.github.io/language/golang/">Golang</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/html-css-js/">Html CSS JavaScript</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/ruby/">Ruby</a>
   
 </li>
 </ul>

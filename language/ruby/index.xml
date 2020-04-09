@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Calico on Megrez</title>
-    <link>https://ylroki.github.io/kubernetes/calico/</link>
-    <description>Recent content in Calico on Megrez</description>
+    <title>Ruby on Megrez</title>
+    <link>https://ylroki.github.io/language/ruby/</link>
+    <description>Recent content in Ruby on Megrez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 08 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ylroki.github.io/kubernetes/calico/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ylroki.github.io/language/ruby/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

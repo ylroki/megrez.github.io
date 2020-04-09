@@ -46,29 +46,30 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Vagrant</h1><h2 id="getting-started">Getting Started</h2>
+<main><h1>Vagrant</h1><p><a href="https://www.vagrantup.com/docs/">https://www.vagrantup.com/docs/</a></p>
+<h2 id="getting-started">Getting Started</h2>
 <p>Vagrant use VirtualBox as default provider, but it seems not work at kernel 5.4+ now(2020-04-07).
 So use libvirt instead.
 <a href="https://codingpackets.com/blog/using-the-libvirt-provider-with-vagrant">https://codingpackets.com/blog/using-the-libvirt-provider-with-vagrant</a></p>
-<p>Install dependancy packages</p>
-<pre><code>sudo apt install -y qemu-kvm libvirt-bin
-sudo apt install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
-sudo apt install -y virtinst
-</code></pre><p>Install vagrant</p>
-<pre><code>wget https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb
-sudo dpkg -i xxx.deb
-</code></pre><p>Install plugin</p>
-<pre><code>vagrant plugin install vagrant-libvirt
-</code></pre><p>Edit Vagrantfile</p>
-<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
-  config.vm.box_check_update = false
-  config.vm.box = &quot;generic/ubuntu1804&quot;
-  config.vm.define :node1 do |node1|
-  end
-end
-</code></pre><p>Run</p>
-<pre><code>vagrant up
-</code></pre><div class="edit-meta">
+<p>Install dependancy packages
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo apt install -y qemu-kvm libvirt-bin
+$ sudo apt install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+$ sudo apt install -y virtinst</code></pre></div></p>
+<p>Install vagrant
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ wget https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb
+$ sudo dpkg -i xxx.deb</code></pre></div></p>
+<p>Install plugin
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ vagrant plugin install vagrant-libvirt</code></pre></div></p>
+<p>Edit Vagrantfile
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box_check_update <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;generic/ubuntu1804&#34;</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:node1</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>node1<span style="color:#f92672">|</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div></p>
+<p>Run
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ vagrant up</code></pre></div></p>
+<div class="edit-meta">
 Last updated on 7 Apr 2020
 
 
@@ -115,7 +116,7 @@ Published on 7 Apr 2020
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Kube Proxy</a>
+<li class=""><a href="https://ylroki.github.io/kubernetes/calico/">Calico</a>
   
 </li>
 
@@ -147,6 +148,14 @@ Published on 7 Apr 2020
 </li>
 
 <li class=""><a href="https://ylroki.github.io/language/golang/">Golang</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/html-css-js/">Html CSS JavaScript</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/ruby/">Ruby</a>
   
 </li>
 </ul>
