@@ -47,6 +47,171 @@
 </div>
 <div class="content-container">
 <main><h1>Elasticsearch</h1><h1 id="getting-started">Getting Started</h1>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rest-apis.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rest-apis.html</a></p>
+<h2 id="get-nodes-information">Get Nodes Information</h2>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-nodes-info.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-nodes-info.html</a></p>
+<h2 id="update-cluster-settings">Update Cluster Settings</h2>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-update-settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-update-settings.html</a></p>
+<h2 id="issues">Issues</h2>
+<p><a href="https://qbox.io/blog/thread-pools-elasticsearch-search-request-errors">https://qbox.io/blog/thread-pools-elasticsearch-search-request-errors</a></p>
+<h2 id="deploy-to-kubernetes">Deploy to Kubernetes</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: ServiceAccount
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">namespace</span>: ske-database
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+    <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">addonmanager.kubernetes.io/mode</span>: Reconcile
+---
+<span style="color:#66d9ef">kind</span>: ClusterRole
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+    <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">addonmanager.kubernetes.io/mode</span>: Reconcile
+<span style="color:#66d9ef">rules</span>:
+- <span style="color:#66d9ef">apiGroups</span>:
+  - <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#66d9ef">resources</span>:
+  - <span style="color:#e6db74">&#34;services&#34;</span>
+  - <span style="color:#e6db74">&#34;namespaces&#34;</span>
+  - <span style="color:#e6db74">&#34;endpoints&#34;</span>
+  <span style="color:#66d9ef">verbs</span>:
+  - <span style="color:#e6db74">&#34;get&#34;</span>
+---
+<span style="color:#66d9ef">kind</span>: ClusterRoleBinding
+<span style="color:#66d9ef">apiVersion</span>: rbac.authorization.k8s.io/v1
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">namespace</span>: ske-database
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+    <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">addonmanager.kubernetes.io/mode</span>: Reconcile
+<span style="color:#66d9ef">subjects</span>:
+- <span style="color:#66d9ef">kind</span>: ServiceAccount
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">namespace</span>: ske-database
+  <span style="color:#66d9ef">apiGroup</span>: <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#66d9ef">roleRef</span>:
+  <span style="color:#66d9ef">kind</span>: ClusterRole
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">apiGroup</span>: <span style="color:#e6db74">&#34;&#34;</span>
+---
+<span style="color:#75715e"># Elasticsearch deployment itself</span>
+<span style="color:#66d9ef">apiVersion</span>: apps/v1
+<span style="color:#66d9ef">kind</span>: StatefulSet
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">namespace</span>: ske-database
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+    <span style="color:#66d9ef">version</span>: v7<span style="color:#ae81ff">.1.0</span>
+    <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">addonmanager.kubernetes.io/mode</span>: Reconcile
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">serviceName</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">replicas</span>: <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">matchLabels</span>:
+      <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+      <span style="color:#66d9ef">version</span>: v7<span style="color:#ae81ff">.1.0</span>
+  <span style="color:#66d9ef">template</span>:
+    <span style="color:#66d9ef">metadata</span>:
+      <span style="color:#66d9ef">labels</span>:
+        <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+        <span style="color:#66d9ef">version</span>: v7<span style="color:#ae81ff">.1.0</span>
+        <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">spec</span>:
+      <span style="color:#66d9ef">serviceAccountName</span>: elasticsearch-ske-database
+      <span style="color:#66d9ef">containers</span>:
+      - <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.1.0</span>
+        <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+        <span style="color:#66d9ef">resources</span>:
+          <span style="color:#75715e"># need more cpu upon initialization, therefore burstable class</span>
+          <span style="color:#66d9ef">limits</span>:
+            <span style="color:#66d9ef">cpu</span>: <span style="color:#ae81ff">8</span>
+          <span style="color:#66d9ef">requests</span>:
+            <span style="color:#66d9ef">cpu</span>: <span style="color:#ae81ff">8</span>
+        <span style="color:#66d9ef">ports</span>:
+        - <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">9200</span>
+          <span style="color:#66d9ef">name</span>: db
+          <span style="color:#66d9ef">protocol</span>: TCP
+        - <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">9300</span>
+          <span style="color:#66d9ef">name</span>: transport
+          <span style="color:#66d9ef">protocol</span>: TCP
+        <span style="color:#66d9ef">volumeMounts</span>:
+        - <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+          <span style="color:#66d9ef">mountPath</span>: /usr/share/elasticsearch/data
+        <span style="color:#66d9ef">env</span>:
+        - <span style="color:#66d9ef">name</span>: <span style="color:#e6db74">&#34;NAMESPACE&#34;</span>
+          <span style="color:#66d9ef">valueFrom</span>:
+            <span style="color:#66d9ef">fieldRef</span>:
+              <span style="color:#66d9ef">fieldPath</span>: metadata.namespace
+        - <span style="color:#66d9ef">name</span>: <span style="color:#e6db74">&#34;cluster.initial_master_nodes&#34;</span>
+          <span style="color:#66d9ef">value</span>: <span style="color:#e6db74">&#34;elasticsearch-ske-database-0&#34;</span>
+      <span style="color:#66d9ef">nodeName</span>: devops-kube-test-node4
+      <span style="color:#66d9ef">volumes</span>:
+      - <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+        <span style="color:#66d9ef">hostPath</span>: 
+          <span style="color:#66d9ef">path</span>: /data/elasticsearch
+          <span style="color:#66d9ef">type</span>: DirectoryOrCreate
+
+      <span style="color:#75715e"># Elasticsearch requires vm.max_map_count to be at least 262144.</span>
+      <span style="color:#75715e"># If your OS already sets up this number to a higher value, feel free</span>
+      <span style="color:#75715e"># to remove this init container.</span>
+      <span style="color:#66d9ef">initContainers</span>:
+      - <span style="color:#66d9ef">image</span>: alpine:<span style="color:#ae81ff">3.6</span>
+        <span style="color:#66d9ef">command</span>: [<span style="color:#e6db74">&#34;/sbin/sysctl&#34;</span>, <span style="color:#e6db74">&#34;-w&#34;</span>, <span style="color:#e6db74">&#34;vm.max_map_count=262144&#34;</span>]
+        <span style="color:#66d9ef">name</span>: elasticsearch-ske-database-init
+        <span style="color:#66d9ef">securityContext</span>:
+          <span style="color:#66d9ef">privileged</span>: <span style="color:#66d9ef">true</span>
+---
+<span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">kind</span>: Service
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">namespace</span>: ske-database
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+    <span style="color:#66d9ef">kubernetes.io/cluster-service</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#66d9ef">addonmanager.kubernetes.io/mode</span>: Reconcile
+    <span style="color:#66d9ef">kubernetes.io/name</span>: <span style="color:#e6db74">&#34;Elasticsearch&#34;</span>
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">ports</span>:
+  - <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">9200</span>
+    <span style="color:#66d9ef">protocol</span>: TCP
+    <span style="color:#66d9ef">targetPort</span>: db
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">k8s-app</span>: elasticsearch-ske-database
+
+---
+<span style="color:#66d9ef">apiVersion</span>: extensions/v1beta1
+<span style="color:#66d9ef">kind</span>: Ingress
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">annotations</span>:
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/proxy-read-timeout</span>: <span style="color:#e6db74">&#34;3600&#34;</span>
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/proxy-send-timeout</span>: <span style="color:#e6db74">&#34;3600&#34;</span>
+    <span style="color:#75715e">#nginx.ingress.kubernetes.io/auth-url:  </span>
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/rewrite-target</span>: /$<span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">name</span>: elasticsearch-ske-database
+  <span style="color:#66d9ef">namespace</span>: ske-database
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">rules</span>:
+  - <span style="color:#66d9ef">host</span>: xxx
+    <span style="color:#66d9ef">http</span>:
+      <span style="color:#66d9ef">paths</span>:
+      - <span style="color:#66d9ef">backend</span>:
+          <span style="color:#66d9ef">serviceName</span>: elasticsearch-ske-database
+          <span style="color:#66d9ef">servicePort</span>: <span style="color:#ae81ff">9200</span>
+        <span style="color:#66d9ef">path</span>: /elasticsearch/(.<span style="color:#75715e">*)</span>
+  <span style="color:#66d9ef">tls</span>:
+  - <span style="color:#66d9ef">hosts</span>:
+    -  xxx</code></pre></div>
 <div class="edit-meta">
 Last updated on 3 Apr 2020
 

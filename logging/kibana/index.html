@@ -47,6 +47,77 @@
 </div>
 <div class="content-container">
 <main><h1>Kibana</h1><h1 id="getting-started">Getting Started</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#66d9ef">kind</span>: Deployment
+<span style="color:#66d9ef">apiVersion</span>: apps/v1
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">app</span>: ske-kibana
+  <span style="color:#66d9ef">name</span>: ske-kibana
+  <span style="color:#66d9ef">namespace</span>: ske-database
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">replicas</span>: <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">revisionHistoryLimit</span>: <span style="color:#ae81ff">10</span>
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">matchLabels</span>:
+      <span style="color:#66d9ef">app</span>: ske-kibana
+  <span style="color:#66d9ef">template</span>:
+    <span style="color:#66d9ef">metadata</span>:
+      <span style="color:#66d9ef">labels</span>:
+        <span style="color:#66d9ef">app</span>: ske-kibana
+    <span style="color:#66d9ef">spec</span>:
+      <span style="color:#66d9ef">containers</span>:
+        - <span style="color:#66d9ef">name</span>: kibana
+          <span style="color:#66d9ef">image</span>: docker.elastic.co/kibana/kibana:<span style="color:#ae81ff">7.1.0</span>
+          <span style="color:#66d9ef">ports</span>:
+            - <span style="color:#66d9ef">containerPort</span>: <span style="color:#ae81ff">5601</span>
+              <span style="color:#66d9ef">protocol</span>: TCP
+          <span style="color:#66d9ef">env</span>:
+            - <span style="color:#66d9ef">name</span>: <span style="color:#e6db74">&#34;ELASTICSEARCH_HOSTS&#34;</span>
+              <span style="color:#66d9ef">value</span>: <span style="color:#e6db74">&#34;http://elasticsearch-ske-database.ske-database.svc.devops-kube-dev.k8s.cluster:9200&#34;</span>
+      <span style="color:#66d9ef">tolerations</span>:
+        - <span style="color:#66d9ef">key</span>: node-role.kubernetes.io/master
+          <span style="color:#66d9ef">effect</span>: NoSchedule
+
+---
+<span style="color:#66d9ef">kind</span>: Service
+<span style="color:#66d9ef">apiVersion</span>: v1
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">labels</span>:
+    <span style="color:#66d9ef">app</span>: ske-kibana
+  <span style="color:#66d9ef">name</span>: kibana-service
+  <span style="color:#66d9ef">namespace</span>: ske-database
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">ports</span>:
+    - <span style="color:#66d9ef">port</span>: <span style="color:#ae81ff">5601</span>
+      <span style="color:#66d9ef">targetPort</span>: <span style="color:#ae81ff">5601</span>
+  <span style="color:#66d9ef">selector</span>:
+    <span style="color:#66d9ef">app</span>: ske-kibana
+
+---
+<span style="color:#66d9ef">apiVersion</span>: extensions/v1beta1
+<span style="color:#66d9ef">kind</span>: Ingress
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">annotations</span>:
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/proxy-read-timeout</span>: <span style="color:#e6db74">&#34;3600&#34;</span>
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/proxy-send-timeout</span>: <span style="color:#e6db74">&#34;3600&#34;</span>
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/auth-type</span>: basic
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/auth-secret</span>: kibana-auth
+    <span style="color:#66d9ef">nginx.ingress.kubernetes.io/auth-realm</span>: <span style="color:#e6db74">&#34;Authentication Required - szdevops&#34;</span>
+  <span style="color:#66d9ef">name</span>: ske-kibana
+  <span style="color:#66d9ef">namespace</span>: ske-database
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">rules</span>:
+  - <span style="color:#66d9ef">host</span>: xxx
+    <span style="color:#66d9ef">http</span>:
+      <span style="color:#66d9ef">paths</span>:
+      - <span style="color:#66d9ef">backend</span>:
+          <span style="color:#66d9ef">serviceName</span>: kibana-service
+          <span style="color:#66d9ef">servicePort</span>: <span style="color:#ae81ff">5601</span>
+        <span style="color:#66d9ef">path</span>: /
+  <span style="color:#66d9ef">tls</span>:
+  - <span style="color:#66d9ef">hosts</span>:
+    -  xxx</code></pre></div>
 <div class="edit-meta">
 Last updated on 3 Apr 2020
 
