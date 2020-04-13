@@ -47,6 +47,149 @@
 </div>
 <div class="content-container">
 <main><h1>Loki</h1><h1 id="getting-started">Getting Started</h1>
+<p><a href="https://github.com/grafana/loki/blob/master/docs/installation/helm.md">https://github.com/grafana/loki/blob/master/docs/installation/helm.md</a></p>
+<h2 id="install-helm">Install helm</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+$ chmod <span style="color:#ae81ff">700</span> get_helm.sh
+$ ./get_helm.sh</code></pre></div>
+<h2 id="install-loki">Install loki</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ helm repo add loki https://grafana.github.io/loki/charts
+$ helm repo update
+$ helm upgrade --install loki loki/loki-stack  --set grafana.enabled<span style="color:#f92672">=</span>false --namespace<span style="color:#f92672">=</span>loki-stack</code></pre></div>
+<p>Use Grafana v6.6.0</p>
+<h2 id="customize">Customize</h2>
+<p>Use local directory to store index and chunk
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl edit statefulset -n loki-stack loki</code></pre></div></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">spec</span>:
+  ……
+  <span style="color:#66d9ef">template</span>:
+    ……
+    <span style="color:#66d9ef">spec</span>:
+      <span style="color:#66d9ef">nodeName</span>: <span style="color:#ae81ff">10.129.104.103</span>
+      ……
+      <span style="color:#66d9ef">volumes</span>:
+      ……
+      - <span style="color:#66d9ef">hostPath</span>:
+          <span style="color:#66d9ef">path</span>: /data/loki
+          <span style="color:#66d9ef">type</span>: DirectoryOrCreate
+        <span style="color:#66d9ef">name</span>: storage</code></pre></td></tr></table>
+</div>
+</div>
+<p>Edit Crontab
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">*/10 * * * * find /data/loki/ -type f -mmin +1440 -delete</code></pre></div></p>
+<p>Edit promtail configmap to scrap other path</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl edit cm -n loki-stack loki-promtail</code></pre></div>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#66d9ef">job_name</span>: kubernetes-pods-name-data
+  <span style="color:#66d9ef">entry_parser</span>: raw
+  <span style="color:#66d9ef">kubernetes_sd_configs</span>:
+  - <span style="color:#66d9ef">role</span>: pod
+  <span style="color:#66d9ef">relabel_configs</span>:
+  - <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_pod_label_application
+    <span style="color:#66d9ef">target_label</span>: __service__
+  - <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_pod_node_name
+    <span style="color:#66d9ef">target_label</span>: __host__
+  - <span style="color:#66d9ef">action</span>: drop
+    <span style="color:#66d9ef">regex</span>: <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">source_labels</span>:
+    - __service__
+  - <span style="color:#66d9ef">action</span>: labelmap
+    <span style="color:#66d9ef">regex</span>: __meta_kubernetes_pod_label_(.+)
+  - <span style="color:#66d9ef">action</span>: replace
+    <span style="color:#66d9ef">replacement</span>: $<span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">separator</span>: /
+    <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_namespace
+    - __service__
+    <span style="color:#66d9ef">target_label</span>: job
+  - <span style="color:#66d9ef">action</span>: replace
+    <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_namespace
+    <span style="color:#66d9ef">target_label</span>: namespace
+  - <span style="color:#66d9ef">action</span>: replace
+    <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_pod_name
+    <span style="color:#66d9ef">target_label</span>: instance
+  - <span style="color:#66d9ef">action</span>: replace
+    <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_pod_container_name
+    <span style="color:#66d9ef">target_label</span>: container_name
+  - <span style="color:#66d9ef">replacement</span>: /data/log/pods/<span style="color:#75715e">*$1/*.log</span>
+    <span style="color:#66d9ef">separator</span>: /
+    <span style="color:#66d9ef">source_labels</span>:
+    - __meta_kubernetes_pod_uid
+    - __meta_kubernetes_pod_container_name
+    <span style="color:#66d9ef">target_label</span>: __path__</code></pre></td></tr></table>
+</div>
+</div>
+<p>Add hostPath to deamonset
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl edit ds -n loki-stack loki-promtail</code></pre></div></p>
+<p>Add loki to grafana as datasource
+<a href="https://grafana.com/docs/grafana/latest/features/datasources/loki/">https://grafana.com/docs/grafana/latest/features/datasources/loki/</a></p>
 <div class="edit-meta">
 Last updated on 8 Apr 2020
 
