@@ -51,6 +51,50 @@
 <p><a href="https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11n9x7DA">https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11n9x7DA</a></p>
 <p>What is docker
 <a href="https://draveness.me/docker/">https://draveness.me/docker/</a></p>
+<h1 id="dockerd-process-docker-exec--it-xxx-cmd">Dockerd process &ldquo;docker exec -it xxx cmd&rdquo;</h1>
+<p><a href="https://github.com/docker/docker-ce">https://github.com/docker/docker-ce</a></p>
+<p>components/engine/api/server/router/container/container.go</p>
+<pre><code>func (r *containerRouter) initRoutes() {
+	r.routes = []router.Route{
+		......
+
+		router.NewPostRoute(&quot;/containers/{name:.*}/start&quot;, r.postContainersStart),
+		......
+	}
+}
+</code></pre><p>components/engine/api/server/router/container/exec.go</p>
+<pre><code>func (s *containerRouter) postContainerExecStart(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+    ......
+    if err := s.backend.ContainerExecStart(context.Background(), execName, stdin, stdout, stderr); err != nil {
+		......
+	}
+	return nil
+}
+</code></pre><p>components/engine/daemon/exec.go</p>
+<pre><code>func (d *Daemon) ContainerExecStart(ctx context.Context, name string, stdin io.Reader, stdout io.Writer, stderr io.Writer) (err error) {
+    ......
+    systemPid, err := d.containerd.Exec(ctx, c.ID, ec.ID, p, cStdin != nil, ec.InitializeStdio)
+
+    ......
+}
+</code></pre><p>components/engine/libcontainerd/remote/client.go</p>
+<pre><code>func (c *client) Start(ctx context.Context, id, checkpointDir string, withStdin bool, attachStdio libcontainerdtypes.StdioCallback) (int, error) {
+}	
+</code></pre><p>components/engine/vendor/github.com/containerd/containerd/container.go</p>
+<pre><code>func (c *container) NewTask(ctx context.Context, ioCreate cio.Creator, opts ...NewTaskOpts) (_ Task, err error) {
+    response, err := c.client.TaskService().Create(ctx, request)
+}
+</code></pre><p>components/engine/vendor/github.com/containerd/containerd/api/services/tasks/v1/tasks.pb.go</p>
+<pre><code>func (c *tasksClient) Create(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error) {
+	out := new(CreateTaskResponse)
+	err := c.cc.Invoke(ctx, &quot;/containerd.services.tasks.v1.Tasks/Create&quot;, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+</code></pre><h1 id="containerd">Containerd</h1>
+<p><a href="https://github.com/containerd/containerd">https://github.com/containerd/containerd</a></p>
 <div class="edit-meta">
 Last updated on 3 Apr 2020
 
