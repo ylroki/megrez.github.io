@@ -8,6 +8,16 @@
   </url>
   
   <url>
+    <loc>https://ylroki.github.io/kubernetes/apiserver/</loc>
+    <lastmod>2020-04-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/kubernetes/kubelet/</loc>
+    <lastmod>2020-04-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/os/user/</loc>
     <lastmod>2020-04-17T00:00:00+00:00</lastmod>
   </url>
