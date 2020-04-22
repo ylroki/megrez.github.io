@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Linux Commands - Megrez</title>
+<title>Web Terminal - Megrez</title>
 <meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/common-tools/linux-cmds/">
+<link rel="canonical" href="https://ylroki.github.io/common-tools/ttyd/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,18 +16,18 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Linux Commands" />
+<meta property="og:title" content="Web Terminal" />
 <meta property="og:description" content="Personal Knowledge Management" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://ylroki.github.io/common-tools/linux-cmds/" />
+<meta property="og:url" content="https://ylroki.github.io/common-tools/ttyd/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="og:updated_time" content="2020-04-07T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:updated_time" content="2020-04-22T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Linux Commands"/>
+<meta name="twitter:title" content="Web Terminal"/>
 <meta name="twitter:description" content="Personal Knowledge Management"/>
-<meta itemprop="name" content="Linux Commands">
+<meta itemprop="name" content="Web Terminal">
 <meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
@@ -46,56 +46,18 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Linux Commands</h1><h1 id="basic">Basic</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show version of kernel</span>
-$ uname -a
-<span style="color:#75715e"># Show version of release</span>
-$ lsb_release -a </code></pre></div>
-<h1 id="process">Process</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show all process</span>
-$ ps aux</code></pre></div>
-<h1 id="memory">Memory</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Show memory</span>
-$ free -m</code></pre></div>
-<h1 id="network">Network</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># ICMP</span>
-$ ping 192.168.1.1
-$ traceroute 192.168.1.1
-<span style="color:#75715e"># DNS</span>
-$ nslookup www.baidu.com
-$ dig www.baidu.com
-<span style="color:#75715e"># TCP</span>
-$ telnet 192.168.1.1 <span style="color:#ae81ff">80</span>
-<span style="color:#75715e"># Capture packets</span>
-$ tcpdump -iany -nA
-$ tcpdump -iany host 192.168.1.1
-$ tcpdump -iany port <span style="color:#ae81ff">80</span>
-<span style="color:#75715e"># Route Table</span>
-$ route -n 
-$ netstat -rn
-<span style="color:#75715e"># Network Interface</span>
-$ ifconfig
-$ ip addr
-<span style="color:#75715e"># TCP Connection</span>
-$ netstat -tp
-$ netstat -tlp
-<span style="color:#75715e"># Socket</span>
-$ lsof -i@192.168.1.1:80</code></pre></div>
-<h1 id="disk">Disk</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Filesystem</span>
-$ df
-<span style="color:#75715e"># Usage</span>
-$ du -h -d <span style="color:#ae81ff">1</span>
-<span style="color:#75715e"># List Open Files</span>
-$ lsof</code></pre></div>
-<div class="edit-meta">
-Last updated on 7 Apr 2020
+<main><h1>Web Terminal</h1><p><a href="https://github.com/tsl0922/ttyd">https://github.com/tsl0922/ttyd</a> support <a href="https://en.wikipedia.org/wiki/ZMODEM">https://en.wikipedia.org/wiki/ZMODEM</a></p>
+<pre><code>docker build -t ttyd-master . -f Dockerfile
+
+docker run -it --rm -p 7681:7681 ttyd-master
+</code></pre><div class="edit-meta">
+Last updated on 22 Apr 2020
 
 
 <br>
-Published on 7 Apr 2020
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/common-tools/linux-cmds/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/common-tools/git/" title="Git"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Git</a>
-<a class="nav nav-next" href="https://ylroki.github.io/common-tools/markdown/" title="Markdown">Next - Markdown <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+Published on 22 Apr 2020
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/common-tools/ttyd/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/common-tools/" title="Common Tools"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Common Tools</a>
+<a class="nav nav-next" href="https://ylroki.github.io/common-tools/git/" title="Git">Next - Git <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -108,7 +70,7 @@ Published on 7 Apr 2020
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/common-tools/ttyd/">Web Terminal</a>
+<li class="parent active"><a href="https://ylroki.github.io/common-tools/ttyd/">Web Terminal</a>
   
 </li>
 
@@ -116,7 +78,7 @@ Published on 7 Apr 2020
   
 </li>
 
-<li class="parent active"><a href="https://ylroki.github.io/common-tools/linux-cmds/">Linux Commands</a>
+<li class=""><a href="https://ylroki.github.io/common-tools/linux-cmds/">Linux Commands</a>
   
 </li>
 
