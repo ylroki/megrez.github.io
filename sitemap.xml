@@ -8,6 +8,21 @@
   </url>
   
   <url>
+    <loc>https://ylroki.github.io/computer-science/</loc>
+    <lastmod>2020-04-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/computer-science/network/</loc>
+    <lastmod>2020-04-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/computer-science/storage/</loc>
+    <lastmod>2020-04-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/common-tools/ttyd/</loc>
     <lastmod>2020-04-22T00:00:00+00:00</lastmod>
   </url>
@@ -28,7 +43,7 @@
   </url>
   
   <url>
-    <loc>https://ylroki.github.io/os/user/</loc>
+    <loc>https://ylroki.github.io/computer-science/os/user/</loc>
     <lastmod>2020-04-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -38,7 +53,7 @@
   </url>
   
   <url>
-    <loc>https://ylroki.github.io/os/kernel/</loc>
+    <loc>https://ylroki.github.io/computer-science/os/kernel/</loc>
     <lastmod>2020-04-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -85,6 +100,11 @@
   <url>
     <loc>https://ylroki.github.io/kubernetes/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/middleware/grpc/</loc>
+    <lastmod>2020-04-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -148,7 +168,7 @@
   </url>
   
   <url>
-    <loc>https://ylroki.github.io/os/</loc>
+    <loc>https://ylroki.github.io/computer-science/os/</loc>
     <lastmod>2020-04-08T00:00:00+00:00</lastmod>
   </url>
   

@@ -48,16 +48,17 @@
 <div class="content-container">
 <main><h1>Prometheus</h1><h1 id="getting-started">Getting Started</h1>
 <p><a href="https://prometheus.io/docs/prometheus/latest/querying/api/">https://prometheus.io/docs/prometheus/latest/querying/api/</a></p>
-<p>curl &lsquo;http://127.0.0.1:9090/api/v1/query_range?start=2020-04-23T07:00:00.000Z&amp;end=2020-04-23T08:00:00.000Z&amp;step=15s&amp;query=labels&rsquo;</p>
-<p>curl &lsquo;http://127.0.0.1:9090/api/v1/label/<strong>name</strong>/values?pretty=true'|jq .data[]|grep pod</p>
-<div class="edit-meta">
+<pre><code>curl 'http://127.0.0.1:9090/api/v1/query_range?start=2020-04-23T07:00:00.000Z&amp;end=2020-04-23T08:00:00.000Z&amp;step=15s&amp;query=labels'
+
+curl 'http://127.0.0.1:9090/api/v1/label/__name__/values'|jq .data[]|grep pod
+</code></pre><div class="edit-meta">
 Last updated on 8 Apr 2020
 
 
 <br>
 Published on 8 Apr 2020
 <br><a href="https://github.com/ylroki/megrez/edit/master/content/monitoring/prometheus/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/monitoring/jaeger/" title="Jaeger"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Jaeger</a>
-<a class="nav nav-next" href="https://ylroki.github.io/os/" title="Operation System">Next - Operation System <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+<a class="nav nav-next" href="https://ylroki.github.io/performance/" title="Performance">Next - Performance <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -91,6 +92,36 @@ Published on 8 Apr 2020
 </li>
 
 <li class=""><a href="https://ylroki.github.io/common-tools/vagrant/">Vagrant</a>
+  
+</li>
+</ul>
+  
+</li>
+
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/computer-science/">Computer Science<span class="mark closed">+</span></a>
+  
+<ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/computer-science/network/">Network</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/computer-science/storage/">Storage</a>
+  
+</li>
+
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/computer-science/os/">Operation System<span class="mark closed">+</span></a>
+  
+<ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/computer-science/os/user/">User</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/computer-science/os/kernel/">Kernel</a>
+  
+</li>
+</ul>
   
 </li>
 </ul>
@@ -163,6 +194,10 @@ Published on 8 Apr 2020
   
 <ul class="sub-menu">
 
+<li class=""><a href="https://ylroki.github.io/middleware/grpc/">Grpc</a>
+  
+</li>
+
 <li class=""><a href="https://ylroki.github.io/middleware/kafka/">Kafka</a>
   
 </li>
@@ -203,21 +238,6 @@ Published on 8 Apr 2020
 </li>
 
 <li class="parent active"><a href="https://ylroki.github.io/monitoring/prometheus/">Prometheus</a>
-  
-</li>
-</ul>
-  
-</li>
-
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/os/">Operation System<span class="mark closed">+</span></a>
-  
-<ul class="sub-menu">
-
-<li class=""><a href="https://ylroki.github.io/os/user/">User</a>
-  
-</li>
-
-<li class=""><a href="https://ylroki.github.io/os/kernel/">Kernel</a>
   
 </li>
 </ul>
