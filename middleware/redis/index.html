@@ -49,6 +49,98 @@
 <main><h1>Redis</h1><h1 id="getting-started">Getting Started</h1>
 <p><a href="https://draveness.me/redis-eventloop/">https://draveness.me/redis-eventloop/</a>
 <a href="https://draveness.me/redis-io-multiplexing/">https://draveness.me/redis-io-multiplexing/</a></p>
+<h2 id="the-design-and-implementation-of-redis">The Design and Implementation of Redis</h2>
+<p><a href="https://book.douban.com/subject/25900156/">https://book.douban.com/subject/25900156/</a></p>
+<p>Key -&gt; Value</p>
+<h3 id="data-structure">Data Structure</h3>
+<h4 id="embstrraw">Embstr/Raw</h4>
+<p>simple dynamic string</p>
+<pre><code>struct sdshdr {
+    int len;
+    int free;
+    char buf[];
+}
+</code></pre><h4 id="linkedlist">Linkedlist</h4>
+<pre><code>typedef struct listNode {
+    struct listNode * prev;
+    struct listNode * next;
+    void * value;
+} listNode;
+
+typedef struct list {
+    listNode * head;
+    listNode * tail;
+    unsigned long len;
+    void * (*dup) (void *ptr);
+    void * (*free) (void *ptr);
+    int * (*match) (void *ptr, void *key);
+} list;
+</code></pre><h4 id="hashtable">Hashtable</h4>
+<pre><code>typedef struct dictht {
+    dictEntry ** table;
+    unsigned long size;
+    unsigned long sizemask;
+    unsigned long used;
+} dictht;
+
+typedef struct dictEntry {
+void* key;
+    union{
+        void *val;
+        uint64 tu64;
+        int64 ts64;
+    } v;
+    
+    struct dictEntry *next;
+} dictEntry;
+
+typedef struct dict {
+    dictType *type;
+    void *private;
+    dictht ht[2];
+    int rehashidx;
+} dict;
+      
+</code></pre><h4 id="skiplist">Skiplist</h4>
+<h4 id="intset">Intset</h4>
+<h4 id="ziplist">Ziplist</h4>
+<h3 id="value-type">Value Type</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Object</th>
+<th align="center">Data Structure</th>
+<th align="center">Example CMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">REDIS_STRING</td>
+<td align="center">int, raw, embstr</td>
+<td align="center">RSET</td>
+</tr>
+<tr>
+<td align="center">REDIS_LIST</td>
+<td align="center">ziplist, linkedlist</td>
+<td align="center">RPUSH</td>
+</tr>
+<tr>
+<td align="center">REDIS_HASH</td>
+<td align="center">ziplist, hashtable</td>
+<td align="center">HSET</td>
+</tr>
+<tr>
+<td align="center">REDIS_SET</td>
+<td align="center">intset, hashtable</td>
+<td align="center">SADD</td>
+</tr>
+<tr>
+<td align="center">REDIS_ZSET</td>
+<td align="center">ziplist, skiplist</td>
+<td align="center">ZADD</td>
+</tr>
+</tbody>
+</table>
 <div class="edit-meta">
 Last updated on 8 Apr 2020
 
