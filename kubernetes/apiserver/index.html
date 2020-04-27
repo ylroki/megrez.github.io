@@ -47,6 +47,25 @@
 </div>
 <div class="content-container">
 <main><h1>Apiserver</h1><h1 id="getting-started">Getting Started</h1>
+<h2 id="update-certsans">Update certSANs</h2>
+<p><a href="https://github.com/kubernetes/kubeadm/issues/1447">https://github.com/kubernetes/kubeadm/issues/1447</a></p>
+<p>In a master</p>
+<pre><code>kubeadm config view &gt; /root/kubeadmconf.yml
+</code></pre><p>Edit /root/kubeadmconf.yml</p>
+<pre><code>kubeadm config upload from-file --config /root/kubeadmconf.yml
+cd /etc/kubernetes/pki
+# check cert before
+openssl x509 -in apiserver.crt -text -noout
+rm apiserver.*
+kubeadm init phase certs apiserver --config=/root/kubeadmconf.yml
+# check cert after
+openssl x509 -in apiserver.crt -text -noout 
+systemctl daemon-reload
+systemctl restart kubelet
+# find and restart apiserver
+docker ps | grep apiserver
+docker restart apiserver_id
+</code></pre><p>copy apiserver.* to other masters，restart apiserver and kubelet</p>
 <div class="edit-meta">
 Last updated on 17 Apr 2020
 
