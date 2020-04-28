@@ -87,8 +87,8 @@ typedef struct dictEntry {
 void* key;
     union{
         void *val;
-        uint64 tu64;
-        int64 ts64;
+        uint64_t u64;
+        int64_t s64;
     } v;
     
     struct dictEntry *next;
@@ -103,7 +103,12 @@ typedef struct dict {
       
 </code></pre><h4 id="skiplist">Skiplist</h4>
 <h4 id="intset">Intset</h4>
-<h4 id="ziplist">Ziplist</h4>
+<pre><code>typedef struct intset {
+    uint32_t encoding;
+    uint32_t length;
+    int8_t contents[];
+} intset;
+</code></pre><h4 id="ziplist">Ziplist</h4>
 <h3 id="value-type">Value Type</h3>
 <table>
 <thead>
@@ -160,6 +165,10 @@ Published on 8 Apr 2020
 <li class=" has-sub-menu"><a href="https://ylroki.github.io/common-tools/">Common Tools<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/common-tools/graphviz/">Graphviz</a>
+  
+</li>
 
 <li class=""><a href="https://ylroki.github.io/common-tools/ttyd/">Web Terminal</a>
   
