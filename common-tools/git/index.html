@@ -59,7 +59,10 @@ $ git commit .</code></pre></div>
 <h1 id="hack-commit">Hack Commit</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ export GIT_COMMITTER_DATE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2020-05-04 22:00:00&#34;</span>   
 $ export GIT_AUTHOR_DATE<span style="color:#f92672">=</span>$GIT_COMMITTER_DATE
-$ git commit --date<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$GIT_COMMITTER_DATE<span style="color:#e6db74">&#34;</span></code></pre></div>
+$ git commit --date<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$GIT_COMMITTER_DATE<span style="color:#e6db74">&#34;</span>
+
+$ export GIT_COMMITTER_DATE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+$ export GIT_AUTHOR_DATE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span></code></pre></div>
 <h1 id="branch">Branch</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># List branch</span>
 $ git branch -v
