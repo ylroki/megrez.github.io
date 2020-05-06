@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Golang - Megrez</title>
+<title>Client Go - Megrez</title>
 <meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/language/golang/">
+<link rel="canonical" href="https://ylroki.github.io/kubernetes/client-go/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,18 +16,18 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Golang" />
+<meta property="og:title" content="Client Go" />
 <meta property="og:description" content="Personal Knowledge Management" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://ylroki.github.io/language/golang/" />
+<meta property="og:url" content="https://ylroki.github.io/kubernetes/client-go/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="og:updated_time" content="2020-04-08T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:updated_time" content="2020-05-06T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Golang"/>
+<meta name="twitter:title" content="Client Go"/>
 <meta name="twitter:description" content="Personal Knowledge Management"/>
-<meta itemprop="name" content="Golang">
+<meta itemprop="name" content="Client Go">
 <meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
@@ -46,23 +46,143 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Golang</h1><h1 id="getting-started">Getting Started</h1>
-<h2 id="http-web-framework">HTTP web framework</h2>
-<p><a href="https://github.com/gin-gonic/gin">https://github.com/gin-gonic/gin</a></p>
-<h2 id="restful-api-documentation">RESTful API documentation</h2>
-<p><a href="https://github.com/swaggo/gin-swagger">https://github.com/swaggo/gin-swagger</a></p>
-<h2 id="pprof">pprof</h2>
-<p><a href="https://www.cnblogs.com/snowInPluto/p/7403097.html">https://www.cnblogs.com/snowInPluto/p/7403097.html</a></p>
-<h2 id="klog">Klog</h2>
-<p><a href="https://bamboox.online/2019/10/01/k8s-klog/">https://bamboox.online/2019/10/01/k8s-klog/</a></p>
-<div class="edit-meta">
-Last updated on 8 Apr 2020
+<main><h1>Client Go</h1><h1 id="getting-started">Getting Started</h1>
+<p><a href="https://github.com/kubernetes/client-go">https://github.com/kubernetes/client-go</a></p>
+<p><a href="https://github.com/kubernetes/client-go/tree/master/examples">https://github.com/kubernetes/client-go/tree/master/examples</a></p>
+<h1 id="spdy">SPDY</h1>
+<p><a href="https://github.com/kubernetes/client-go/tree/master/tools/remotecommand">https://github.com/kubernetes/client-go/tree/master/tools/remotecommand</a></p>
+<p>example</p>
+<pre><code>    exec, err := remotecommand.NewSPDYExecutor(restConf, &quot;POST&quot;, req.URL())
+	if err != nil {
+		return fmt.Errorf(&quot;error while creating Executor: %v&quot;, err)
+	}
+
+	err = exec.Stream(remotecommand.StreamOptions{
+		Stdin:  stdin,
+		Stdout: stdout,
+		Stderr: stderr, // if we abort to close stdin and stdout, v4.go:69 p.copyStderr(&amp;wg) still waiting, so set stderr nil
+		Tty:    true,
+	})
+	if err != nil {
+		return fmt.Errorf(&quot;error in Stream: %v&quot;, err)
+	}
+</code></pre><p>k8s.io/client-go/tools/remotecommand/remotecommand.go</p>
+<pre><code>func (e *streamExecutor) Stream(options StreamOptions) error {
+    conn, protocol, err := spdy.Negotiate(
+		e.upgrader,
+		&amp;http.Client{Transport: e.transport},
+		req,
+		e.protocols...,
+	)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	var streamer streamProtocolHandler
+
+	switch protocol {
+	case remotecommand.StreamProtocolV4Name:
+		streamer = newStreamProtocolV4(options)
+	.......
+	}
+
+	return streamer.stream(conn)
+}
+</code></pre><p>k8s.io/client-go/tools/remotecommand/v2.go</p>
+<pre><code>func (p *streamProtocolV2) createStreams(conn streamCreator) error {
+    .......
+    // set up stdin stream
+	if p.Stdin != nil {
+		headers.Set(v1.StreamType, v1.StreamTypeStdin)
+		p.remoteStdin, err = conn.CreateStream(headers)
+		if err != nil {
+			return err
+		}
+	}
+}
+</code></pre><p>k8s.io/apimachinery/pkg/util/httpstream/spdy/connection.go</p>
+<pre><code>// CreateStream creates a new stream with the specified headers and registers
+// it with the connection.
+func (c *connection) CreateStream(headers http.Header) (httpstream.Stream, error) {
+	stream, err := c.conn.CreateStream(headers, nil, false)
+	if err != nil {
+		return nil, err
+	}
+	if err = stream.WaitTimeout(createStreamResponseTimeout); err != nil {
+		return nil, err
+	}
+
+	c.registerStream(stream)
+	return stream, nil
+}
+</code></pre><p>github.com/docker/spdystream/connection.go</p>
+<pre><code>// CreateStream creates a new spdy stream using the parameters for
+// creating the stream frame.  The stream frame will be sent upon
+// calling this function, however this function does not wait for
+// the reply frame.  If waiting for the reply is desired, use
+// the stream Wait or WaitTimeout function on the stream returned
+// by this function.
+func (s *Connection) CreateStream(headers http.Header, parent *Stream, fin bool) (*Stream, error) {
+	// MUST synchronize stream creation (all the way to writing the frame)
+	// as stream IDs **MUST** increase monotonically.
+	s.nextIdLock.Lock()
+	defer s.nextIdLock.Unlock()
+
+	streamId := s.getNextStreamId()
+	if streamId == 0 {
+		return nil, fmt.Errorf(&quot;Unable to get new stream id&quot;)
+	}
+
+	stream := &amp;Stream{
+		streamId:   streamId,
+		parent:     parent,
+		conn:       s,
+		startChan:  make(chan error),
+		headers:    headers,
+		dataChan:   make(chan []byte),
+		headerChan: make(chan http.Header),
+		closeChan:  make(chan bool),
+	}
+
+	debugMessage(&quot;(%p) (%p) Create stream&quot;, s, stream)
+
+	s.addStream(stream)
+
+	return stream, s.sendStream(stream, fin)
+}
+</code></pre><p>github.com/docker/spdystream/stream.go</p>
+<pre><code>// Read reads bytes from a stream, a single read will never get more
+// than what is sent on a single data frame, but a multiple calls to
+// read may get data from the same data frame.
+func (s *Stream) Read(p []byte) (n int, err error) {
+	if s.unread == nil {
+		select {
+		case &lt;-s.closeChan:
+			return 0, io.EOF
+		case read, ok := &lt;-s.dataChan:
+			if !ok {
+				return 0, io.EOF
+			}
+			s.unread = read
+		}
+	}
+	n = copy(p, s.unread)
+	if n &lt; len(s.unread) {
+		s.unread = s.unread[n:]
+	} else {
+		s.unread = nil
+	}
+	return
+}
+</code></pre><div class="edit-meta">
+Last updated on 6 May 2020
 
 
 <br>
-Published on 8 Apr 2020
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/language/golang/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/language/ansible/" title="Ansible"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Ansible</a>
-<a class="nav nav-next" href="https://ylroki.github.io/language/html-css-js/" title="Html CSS JavaScript">Next - Html CSS JavaScript <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+Published on 6 May 2020
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/kubernetes/client-go/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/kubernetes/" title="Kubernetes"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Kubernetes</a>
+<a class="nav nav-next" href="https://ylroki.github.io/kubernetes/mechanisms/" title="Mechanisms">Next - Mechanisms <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -140,11 +260,11 @@ Published on 8 Apr 2020
   
 </li>
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/client-go/">Client Go</a>
+<li class="parent active"><a href="https://ylroki.github.io/kubernetes/client-go/">Client Go</a>
   
 </li>
 
@@ -195,7 +315,7 @@ Published on 8 Apr 2020
   
 </li>
 
-<li class="parent has-sub-menu"><a href="https://ylroki.github.io/language/">Language<span class="mark opened">-</span></a>
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/language/">Language<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
 
@@ -203,7 +323,7 @@ Published on 8 Apr 2020
   
 </li>
 
-<li class="parent active"><a href="https://ylroki.github.io/language/golang/">Golang</a>
+<li class=""><a href="https://ylroki.github.io/language/golang/">Golang</a>
   
 </li>
 
