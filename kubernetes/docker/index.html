@@ -51,6 +51,7 @@
 <p><a href="https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11n9x7DA">https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11n9x7DA</a></p>
 <p>What is docker
 <a href="https://draveness.me/docker/">https://draveness.me/docker/</a></p>
+<p><a href="http://alexander.holbreich.org/docker-components-explained/">http://alexander.holbreich.org/docker-components-explained/</a></p>
 <h1 id="docker-logs">Docker Logs</h1>
 <p><a href="https://sematext.com/guides/docker-logs/">https://sematext.com/guides/docker-logs/</a></p>
 <h1 id="dockerd-process-docker-exec--it-xxx-cmd">Dockerd process &ldquo;docker exec -it xxx cmd&rdquo;</h1>
@@ -97,7 +98,127 @@
 }
 </code></pre><h1 id="containerd">Containerd</h1>
 <p><a href="https://github.com/containerd/containerd">https://github.com/containerd/containerd</a></p>
-<div class="edit-meta">
+<p>containerd/services/tasks/service.go</p>
+<pre><code>func (s *service) Register(server *grpc.Server) error {
+	api.RegisterTasksServer(server, s)
+	return nil
+}
+</code></pre><p>containerd/api/services/tasks/v1/tasks.pb.go</p>
+<pre><code>var _Tasks_serviceDesc = grpc.ServiceDesc{
+	ServiceName: &quot;containerd.services.tasks.v1.Tasks&quot;,
+	HandlerType: (*TasksServer)(nil),
+	Methods: []grpc.MethodDesc{
+		......
+
+
+func _Tasks_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TasksServer).Create(ctx, in)
+	}
+	info := &amp;grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: &quot;/containerd.services.tasks.v1.Tasks/Create&quot;,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TasksServer).Create(ctx, req.(*CreateTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+</code></pre><p>containerd/services/tasks/local.go</p>
+<pre><code>func (l *local) Create(ctx context.Context, r *api.CreateTaskRequest, _ ...grpc.CallOption) (*api.CreateTaskResponse, error) {
+	container, err := l.getContainer(ctx, r.ContainerID)
+	if err != nil {
+		return nil, errdefs.ToGRPC(err)
+	}
+	checkpointPath, err := getRestorePath(container.Runtime.Name, r.Options)
+	if err != nil {
+		return nil, err
+	}
+	// jump get checkpointPath from checkpoint image
+	if checkpointPath != &quot;&quot; &amp;&amp; r.Checkpoint != nil {
+		checkpointPath, err = ioutil.TempDir(os.Getenv(&quot;XDG_RUNTIME_DIR&quot;), &quot;ctrd-checkpoint&quot;)
+		if err != nil {
+			return nil, err
+		}
+		if r.Checkpoint.MediaType != images.MediaTypeContainerd1Checkpoint {
+			return nil, fmt.Errorf(&quot;unsupported checkpoint type %q&quot;, r.Checkpoint.MediaType)
+		}
+		reader, err := l.store.ReaderAt(ctx, ocispec.Descriptor{
+			MediaType:   r.Checkpoint.MediaType,
+			Digest:      r.Checkpoint.Digest,
+			Size:        r.Checkpoint.Size_,
+			Annotations: r.Checkpoint.Annotations,
+		})
+		if err != nil {
+			return nil, err
+		}
+		_, err = archive.Apply(ctx, checkpointPath, content.NewReader(reader))
+		reader.Close()
+		if err != nil {
+			return nil, err
+		}
+	}
+	opts := runtime.CreateOpts{
+		Spec: container.Spec,
+		IO: runtime.IO{
+			Stdin:    r.Stdin,
+			Stdout:   r.Stdout,
+			Stderr:   r.Stderr,
+			Terminal: r.Terminal,
+		},
+		Checkpoint:     checkpointPath,
+		Runtime:        container.Runtime.Name,
+		RuntimeOptions: container.Runtime.Options,
+		TaskOptions:    r.Options,
+	}
+	for _, m := range r.Rootfs {
+		opts.Rootfs = append(opts.Rootfs, mount.Mount{
+			Type:    m.Type,
+			Source:  m.Source,
+			Options: m.Options,
+		})
+	}
+	rtime, err := l.getRuntime(container.Runtime.Name)
+	if err != nil {
+		return nil, err
+	}
+	_, err = rtime.Get(ctx, r.ContainerID)
+	if err != nil &amp;&amp; err != runtime.ErrTaskNotExists {
+		return nil, errdefs.ToGRPC(err)
+	}
+	if err == nil {
+		return nil, errdefs.ToGRPC(fmt.Errorf(&quot;task %s already exists&quot;, r.ContainerID))
+	}
+	c, err := rtime.Create(ctx, r.ContainerID, opts)
+	if err != nil {
+		return nil, errdefs.ToGRPC(err)
+	}
+	if err := l.monitor.Monitor(c); err != nil {
+		return nil, errors.Wrap(err, &quot;monitor task&quot;)
+	}
+	return &amp;api.CreateTaskResponse{
+		ContainerID: r.ContainerID,
+		Pid:         c.PID(),
+	}, nil
+}
+</code></pre><h1 id="containerd-shim">Containerd-Shim</h1>
+<p>containerd/runtime/v2/task/shim.pb.go</p>
+<pre><code>func RegisterTaskService(srv *github_com_containerd_ttrpc.Server, svc TaskService) {
+	srv.Register(&quot;containerd.task.v2.Task&quot;, map[string]github_com_containerd_ttrpc.Method{
+		&quot;State&quot;: func(ctx context.Context, unmarshal func(interface{}) error) (interface{}, error) {
+			var req StateRequest
+			if err := unmarshal(&amp;req); err != nil {
+				return nil, err
+			}
+			return svc.State(ctx, &amp;req)
+		},
+
+		.......
+</code></pre><div class="edit-meta">
 Last updated on 3 Apr 2020
 
 
