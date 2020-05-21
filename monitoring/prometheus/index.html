@@ -55,7 +55,10 @@ curl 'http://127.0.0.1:9090/api/v1/label/__name__/values'|jq .data[]|grep pod
 </code></pre><h1 id="with-kuberneters">With Kuberneters</h1>
 <p><a href="https://github.com/coreos/prometheus-operator">https://github.com/coreos/prometheus-operator</a></p>
 <p><a href="https://github.com/coreos/kube-prometheus">https://github.com/coreos/kube-prometheus</a></p>
-<div class="edit-meta">
+<h1 id="federation">Federation</h1>
+<p><a href="https://prometheus.io/docs/prometheus/latest/federation/">https://prometheus.io/docs/prometheus/latest/federation/</a></p>
+<pre><code>curl -G --data-urlencode 'match[]={__name__=&quot;up&quot;}' http://xxx:9090/federate
+</code></pre><div class="edit-meta">
 Last updated on 8 Apr 2020
 
 
