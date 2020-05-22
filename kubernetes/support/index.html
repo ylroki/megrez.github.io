@@ -58,6 +58,14 @@
 <p><a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/">https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/</a></p>
 <h1 id="kubebuilder">Kubebuilder</h1>
 <p><a href="https://book-v1.book.kubebuilder.io/quick_start.html">https://book-v1.book.kubebuilder.io/quick_start.html</a></p>
+<h1 id="swap">Swap</h1>
+<p><a href="https://wiki.archlinux.org/index.php/Partitioning">https://wiki.archlinux.org/index.php/Partitioning</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/swap#Activation_by_systemd">https://wiki.archlinux.org/index.php/swap#Activation_by_systemd</a></p>
+<p>Disabling swap
+To deactivate specific swap space:</p>
+<pre><code># swapoff /dev/sdxy
+</code></pre><p>Alternatively use the -a switch to deactivate all swap space.</p>
+<p>Since swap is managed by systemd, it will be activated again on the next system startup. To disable the automatic activation of detected swap space permanently, run systemctl &ndash;type swap to find the responsible .swap unit and mask it.</p>
 <div class="edit-meta">
 Last updated on 1 May 2020
 
