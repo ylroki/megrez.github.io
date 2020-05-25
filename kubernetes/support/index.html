@@ -66,7 +66,34 @@ To deactivate specific swap space:</p>
 <pre><code># swapoff /dev/sdxy
 </code></pre><p>Alternatively use the -a switch to deactivate all swap space.</p>
 <p>Since swap is managed by systemd, it will be activated again on the next system startup. To disable the automatic activation of detected swap space permanently, run systemctl &ndash;type swap to find the responsible .swap unit and mask it.</p>
-<div class="edit-meta">
+<h1 id="kubeconfig">Kubeconfig</h1>
+<pre><code>KUBE_API_EP=xxxx:6443
+CLUSTER_NAME=hello
+
+cat &lt;&lt; EOF &gt; cluster-reader.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: szdevops-reader
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;*&quot;]
+  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]
+EOF
+
+kubectl apply -f cluster-reader.yaml
+kubectl create sa szdevops-reader
+kubectl create clusterrolebinding szdevops-reader --clusterrole szdevops-reader --serviceaccount default:szdevops-reader
+
+KUBE_DEPLOY_SECRET_NAME=`kubectl get sa szdevops-reader -o jsonpath='{.secrets[0].name}'`
+KUBE_API_TOKEN=`kubectl get secret $KUBE_DEPLOY_SECRET_NAME -o jsonpath='{.data.token}'|base64 --decode`
+
+export KUBECONFIG=./$CLUSTER_NAME.kubeconfig
+kubectl config set-cluster $CLUSTER_NAME --server=https://$KUBE_API_EP --certificate-authority=/etc/kuberneter/pki/ca.crt --embed-certs=true
+kubectl config set-credentials szdevops-reader --token=$KUBE_API_TOKEN
+kubectl config set-context $CLUSTER_NAME --cluster $CLUSTER_NAME --user szdevops-reader
+
+</code></pre><div class="edit-meta">
 Last updated on 1 May 2020
 
 
@@ -302,6 +329,26 @@ Published on 1 May 2020
 <li class=" has-sub-menu"><a href="https://ylroki.github.io/logging/">Logging<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/logging/filebeat/">Filebeat</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/logging/loki/">Loki</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/logging/elasticsearch/">Elasticsearch</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/logging/kibana/">Kibana</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/logging/logstash/">Logstash</a>
+  
+</li>
 </ul>
   
 </li>
