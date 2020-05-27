@@ -51,7 +51,8 @@
 <h1 id="ip-masq-agent">IP Masq Agent</h1>
 <p><a href="https://github.com/kubernetes-sigs/ip-masq-agent">https://github.com/kubernetes-sigs/ip-masq-agent</a></p>
 <h1 id="cert">Cert</h1>
-<p><a href="https://blog.csdn.net/ct1150/article/details/100144015?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase">https://blog.csdn.net/ct1150/article/details/100144015?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
+<pre><code>openssl x509  -noout -text -in xxx.crt
+</code></pre><p><a href="https://blog.csdn.net/ct1150/article/details/100144015?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase">https://blog.csdn.net/ct1150/article/details/100144015?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/22142170">https://zhuanlan.zhihu.com/p/22142170</a></p>
 <p><a href="https://kubernetes.io/docs/setup/best-practices/certificates/">https://kubernetes.io/docs/setup/best-practices/certificates/</a></p>
 <p><a href="https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/">https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/</a></p>
@@ -68,8 +69,13 @@ To deactivate specific swap space:</p>
 </code></pre><p>Alternatively use the -a switch to deactivate all swap space.</p>
 <p>Since swap is managed by systemd, it will be activated again on the next system startup. To disable the automatic activation of detected swap space permanently, run systemctl &ndash;type swap to find the responsible .swap unit and mask it.</p>
 <h1 id="kubeconfig">Kubeconfig</h1>
-<pre><code>KUBE_API_EP=xxxx:6443
-CLUSTER_NAME=hello
+<pre><code>if [ ! $# == 2 ]; then
+echo &quot;Usage: $0 ip:port cluster&quot;
+exit
+fi
+
+KUBE_API_EP=$1
+CLUSTER_NAME=$2
 
 cat &lt;&lt; EOF &gt; cluster-reader.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -90,9 +96,10 @@ KUBE_DEPLOY_SECRET_NAME=`kubectl get sa szdevops-reader -o jsonpath='{.secrets[0
 KUBE_API_TOKEN=`kubectl get secret $KUBE_DEPLOY_SECRET_NAME -o jsonpath='{.data.token}'|base64 --decode`
 
 export KUBECONFIG=./$CLUSTER_NAME.kubeconfig
-kubectl config set-cluster $CLUSTER_NAME --server=https://$KUBE_API_EP --certificate-authority=/etc/kuberneter/pki/ca.crt --embed-certs=true
+kubectl config set-cluster $CLUSTER_NAME --server=https://$KUBE_API_EP --certificate-authority=/etc/kubernetes/pki/ca.crt --embed-certs=true
 kubectl config set-credentials szdevops-reader --token=$KUBE_API_TOKEN
 kubectl config set-context $CLUSTER_NAME --cluster $CLUSTER_NAME --user szdevops-reader
+kubectl config use-context $CLUSTER_NAME
 
 </code></pre><div class="edit-meta">
 Last updated on 1 May 2020
@@ -238,6 +245,10 @@ Published on 1 May 2020
 <li class=""><a href="https://ylroki.github.io/kubernetes/kubeadm/">Kubeadm</a>
   
 </li>
+
+<li class=""><a href="https://ylroki.github.io/kubernetes/developer/">Developer</a>
+  
+</li>
 </ul>
   
 </li>
@@ -249,6 +260,22 @@ Published on 1 May 2020
 <li class=" has-sub-menu"><a href="https://ylroki.github.io/language/">Language<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/language/ansible/">Ansible</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/golang/">Golang</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/html-css-js/">Html CSS JavaScript</a>
+  
+</li>
+
+<li class=""><a href="https://ylroki.github.io/language/ruby/">Ruby</a>
+  
+</li>
 </ul>
   
 </li>

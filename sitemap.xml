@@ -148,6 +148,10 @@
   </url>
   
   <url>
+    <loc>https://ylroki.github.io/kubernetes/developer/</loc>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/middleware/grpc/</loc>
     <lastmod>2020-04-23T00:00:00+00:00</lastmod>
   </url>

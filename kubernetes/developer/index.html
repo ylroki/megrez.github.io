@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Mysql - Megrez</title>
+<title>Developer - Megrez</title>
 <meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/middleware/mysql/">
+<link rel="canonical" href="https://ylroki.github.io/kubernetes/developer/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,18 +16,18 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Mysql" />
+<meta property="og:title" content="Developer" />
 <meta property="og:description" content="Personal Knowledge Management" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://ylroki.github.io/middleware/mysql/" />
+<meta property="og:url" content="https://ylroki.github.io/kubernetes/developer/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="og:updated_time" content="2020-04-03T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Mysql"/>
+<meta name="twitter:title" content="Developer"/>
 <meta name="twitter:description" content="Personal Knowledge Management"/>
-<meta itemprop="name" content="Mysql">
+<meta itemprop="name" content="Developer">
 <meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
@@ -46,32 +46,24 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Mysql</h1><h1 id="getting-started">Getting Started</h1>
-<p><a href="https://draveness.me/mysql-innodb/">https://draveness.me/mysql-innodb/</a></p>
-<h2 id="mysql-technology-insider--innodb-storage-engine--2nd-edition-chinese-edition">MySQL technology insider : InnoDB Storage Engine ( 2nd Edition )(Chinese Edition)</h2>
-<p><a href="https://book.douban.com/subject/24708143/">https://book.douban.com/subject/24708143/</a></p>
-<h3 id="keyword">Keyword</h3>
-<ul>
-<li>Page
-<ul>
-<li>cache unit</li>
-</ul>
-</li>
-<li>B+ Tree
-<ul>
-<li>Data structure to orginise table</li>
-<li>Non-leaf node store index, leaf node store data(or rowid)</li>
-</ul>
-</li>
-</ul>
-<div class="edit-meta">
-Last updated on 3 Apr 2020
+<main><h1>Developer</h1><h1 id="getting-started">Getting Started</h1>
+<p><a href="https://github.com/kubernetes/community/blob/master/contributors/devel/development.md">https://github.com/kubernetes/community/blob/master/contributors/devel/development.md</a></p>
+<h2 id="build-image">Build Image</h2>
+<pre><code>FROM ubuntu:18.04
+RUN apt update &amp;&amp; apt install -y curl git
+RUN curl -L https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz | tar zxvf - -C /usr/lib/
+ENV GOROOT /usr/lib/go
+ENV PATH /usr/lib/go/bin:$PATH
+</code></pre><pre><code>docker build . -t szdevops-kube-builder -f Dockerfile
+</code></pre><h2 id="run-builder">Run builder</h2>
+<pre><code>docker run -it -v /Users/liye/Documents/kubernetes:/usr/lib/go/src/k8s.io/kubernetes szdevops-kube-builder
+</code></pre><h2 id="build-kubeadm">Build kubeadm</h2>
+<pre><code>cd /usr/lib/go/src/k8s.io/kubernetes/cmd/kubeadm
+go build
+</code></pre><div class="edit-meta">
 
-
-<br>
-Published on 3 Apr 2020
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/middleware/mysql/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/middleware/haproxy/" title="Haproxy"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Haproxy</a>
-<a class="nav nav-next" href="https://ylroki.github.io/middleware/nginx/" title="Nginx">Next - Nginx <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/kubernetes/developer/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/kubernetes/kubeadm/" title="Kubeadm"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Kubeadm</a>
+<a class="nav nav-next" href="https://ylroki.github.io/jenkins/" title="Jenkins">Next - Jenkins <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -153,7 +145,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
@@ -209,7 +201,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/developer/">Developer</a>
+<li class="parent active"><a href="https://ylroki.github.io/kubernetes/developer/">Developer</a>
   
 </li>
 </ul>
@@ -243,7 +235,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class="parent has-sub-menu"><a href="https://ylroki.github.io/middleware/">Middleware<span class="mark opened">-</span></a>
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/middleware/">Middleware<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
 
@@ -267,7 +259,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class="parent active"><a href="https://ylroki.github.io/middleware/mysql/">Mysql</a>
+<li class=""><a href="https://ylroki.github.io/middleware/mysql/">Mysql</a>
   
 </li>
 
