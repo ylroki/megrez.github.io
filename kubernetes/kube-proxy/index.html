@@ -48,46 +48,17 @@
 <div class="content-container">
 <main><h1>Kube Proxy</h1><h1 id="getting-started">Getting Started</h1>
 <p><a href="https://int32bit.me/2019/11/28/IPVS%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9Akube-proxy%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">https://int32bit.me/2019/11/28/IPVS%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9Akube-proxy%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</a></p>
-<h3 id="chain-prerouting-policy-accept">Chain PREROUTING (policy ACCEPT)</h3>
-<pre><code>target     prot opt source               destination         
-KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
-</code></pre><h3 id="chain-kube-services-2-references">Chain KUBE-SERVICES (2 references)</h3>
-<pre><code>target     prot opt source               destination         
-KUBE-LOAD-BALANCER  all  --  anywhere             anywhere             /* Kubernetes service lb portal */ match-set KUBE-LOAD-BALANCER dst,dst
-KUBE-MARK-MASQ  all  -- !10.150.0.0/15        anywhere             /* Kubernetes service cluster ip + port for masquerade purpose */ match-set KUBE-CLUSTER-IP dst,dst
-KUBE-MARK-MASQ  all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst
-ACCEPT     all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst PHYSDEV match ! --physdev-is-in ADDRTYPE match src-type !LOCAL
-ACCEPT     all  --  anywhere             anywhere             /* Kubernetes service external ip + port for masquerade and filter purpose */ match-set KUBE-EXTERNAL-IP dst,dst ADDRTYPE match dst-type LOCAL
-KUBE-NODE-PORT  all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
-ACCEPT     all  --  anywhere             anywhere             match-set KUBE-CLUSTER-IP dst,dst
-ACCEPT     all  --  anywhere             anywhere             match-set KUBE-LOAD-BALANCER dst,dst
-</code></pre><h3 id="chain-input-policy-accept">Chain INPUT (policy ACCEPT)</h3>
-<pre><code>target     prot opt source               destination         
-</code></pre><h3 id="chain-output-policy-accept">Chain OUTPUT (policy ACCEPT)</h3>
-<pre><code>target     prot opt source               destination         
-KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
-</code></pre><h3 id="chain-postrouting-policy-accept">Chain POSTROUTING (policy ACCEPT)</h3>
-<pre><code>target     prot opt source               destination         
-KUBE-POSTROUTING  all  --  anywhere             anywhere             /* kubernetes postrouting rules */
-</code></pre><h3 id="chain-kube-load-balancer-1-references">Chain KUBE-LOAD-BALANCER (1 references)</h3>
-<pre><code>target     prot opt source               destination         
-RETURN     all  --  anywhere             anywhere             /* Kubernetes service load balancer ip + port with externalTrafficPolicy=local */ match-set KUBE-LOAD-BALANCER-LOCAL dst,dst
-KUBE-MARK-MASQ  all  --  anywhere             anywhere            
-</code></pre><h3 id="chain-kube-mark-drop-1-references">Chain KUBE-MARK-DROP (1 references)</h3>
-<pre><code>target     prot opt source               destination         
-MARK       all  --  anywhere             anywhere             MARK or 0x8000
-</code></pre><h3 id="chain-kube-mark-masq-4-references">Chain KUBE-MARK-MASQ (4 references)</h3>
-<pre><code>target     prot opt source               destination         
-MARK       all  --  anywhere             anywhere             MARK or 0x4000
-</code></pre><h3 id="chain-kube-node-port-1-references">Chain KUBE-NODE-PORT (1 references)</h3>
-<pre><code>target     prot opt source               destination         
-RETURN     tcp  --  anywhere             anywhere             /* Kubernetes nodeport TCP port with externalTrafficPolicy=local */ match-set KUBE-NODE-PORT-LOCAL-TCP dst
-KUBE-MARK-MASQ  tcp  --  anywhere             anywhere             /* Kubernetes nodeport TCP port for masquerade purpose */ match-set KUBE-NODE-PORT-TCP dst
-
-</code></pre><h3 id="chain-kube-postrouting-1-references">Chain KUBE-POSTROUTING (1 references)</h3>
-<pre><code>target     prot opt source               destination         
-MASQUERADE  all  --  anywhere             anywhere             /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
-MASQUERADE  all  --  anywhere             anywhere             /* Kubernetes endpoints dst ip:port, source ip for solving hairpin purpose */ match-set KUBE-LOOP-BACK dst,dst,src
+<h1 id="what-is-service">What is service</h1>
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/">https://kubernetes.io/docs/concepts/services-networking/service/</a></p>
+<h1 id="calico-support">Calico support</h1>
+<p>Calico implements Kubernetes service external traffic policy, which controls whether external traffic is routed to node-local or cluster-wide endpoints.
+<a href="https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/">https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/</a></p>
+<p><a href="https://docs.projectcalico.org/security/services-cluster-ips">https://docs.projectcalico.org/security/services-cluster-ips</a></p>
+<p>Services of type “Local” will be advertised as a /32 route, and only from the nodes running a pod backing that service.</p>
+<p><a href="https://www.projectcalico.org/kubernetes-service-ip-route-advertisement/">https://www.projectcalico.org/kubernetes-service-ip-route-advertisement/</a></p>
+<h1 id="ipvs">ipvs</h1>
+<pre><code>$  ipset list
+$ ipvsadm -L -t  ip:port
 </code></pre><div class="edit-meta">
 Last updated on 8 Apr 2020
 
