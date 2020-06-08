@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Logging - Megrez</title>
+<title>Apiserver - Megrez</title>
 <meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/logging/">
+<link rel="canonical" href="https://ylroki.github.io/kubernetes/etcd/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,18 +16,18 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Logging" />
+<meta property="og:title" content="Apiserver" />
 <meta property="og:description" content="Personal Knowledge Management" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://ylroki.github.io/logging/" />
+<meta property="og:url" content="https://ylroki.github.io/kubernetes/etcd/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="og:updated_time" content="2020-04-03T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:updated_time" content="2020-04-17T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Logging"/>
+<meta name="twitter:title" content="Apiserver"/>
 <meta name="twitter:description" content="Personal Knowledge Management"/>
-<meta itemprop="name" content="Logging">
+<meta itemprop="name" content="Apiserver">
 <meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
@@ -46,15 +46,34 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Logging</h1><h1 id="getting-started">Getting Started</h1>
+<main><h1>Apiserver</h1><h1 id="getting-started">Getting Started</h1>
+<h2 id="update-certsans">Update certSANs</h2>
+<p><a href="https://github.com/kubernetes/kubeadm/issues/1447">https://github.com/kubernetes/kubeadm/issues/1447</a></p>
+<p>In a master</p>
+<pre><code>kubeadm config view &gt; /root/kubeadmconf.yml
+</code></pre><p>Edit /root/kubeadmconf.yml</p>
+<pre><code>kubeadm config upload from-file --config /root/kubeadmconf.yml
+cd /etc/kubernetes/pki
+# check cert before
+openssl x509 -in apiserver.crt -text -noout
+rm apiserver.*
+kubeadm init phase certs apiserver --config=/root/kubeadmconf.yml
+# check cert after
+openssl x509 -in apiserver.crt -text -noout 
+systemctl daemon-reload
+systemctl restart kubelet
+# find and restart apiserver
+docker ps | grep apiserver
+docker restart apiserver_id
+</code></pre><p>copy apiserver.* to other masters，restart apiserver and kubelet</p>
 <div class="edit-meta">
-Last updated on 3 Apr 2020
+Last updated on 17 Apr 2020
 
 
 <br>
-Published on 3 Apr 2020
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/logging/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/performance/" title="Performance"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Performance</a>
-<a class="nav nav-next" href="https://ylroki.github.io/logging/filebeat/" title="Filebeat">Next - Filebeat <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+Published on 17 Apr 2020
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/kubernetes/etcd/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/kubernetes/controller/" title="Controller Manager"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Controller Manager</a>
+<a class="nav nav-next" href="https://ylroki.github.io/kubernetes/kubelet/" title="Kubelet">Next - Kubelet <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -136,7 +155,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/kubernetes/">Kubernetes<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
@@ -172,7 +191,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/etcd/">Apiserver</a>
+<li class="parent active"><a href="https://ylroki.github.io/kubernetes/etcd/">Apiserver</a>
   
 </li>
 
@@ -288,7 +307,7 @@ Published on 3 Apr 2020
   
 </li>
 
-<li class="parent active has-sub-menu"><a href="https://ylroki.github.io/logging/">Logging<span class="mark opened">-</span></a>
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/logging/">Logging<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
 
