@@ -55,6 +55,7 @@ curl 'http://127.0.0.1:9090/api/v1/label/__name__/values'|jq .data[]|grep pod
 </code></pre><h1 id="with-kuberneters">With Kuberneters</h1>
 <p><a href="https://github.com/coreos/prometheus-operator">https://github.com/coreos/prometheus-operator</a></p>
 <p><a href="https://github.com/coreos/kube-prometheus">https://github.com/coreos/kube-prometheus</a></p>
+<p><a href="https://brancz.com/2018/02/27/using-kube-rbac-proxy-to-secure-kubernetes-workloads/">https://brancz.com/2018/02/27/using-kube-rbac-proxy-to-secure-kubernetes-workloads/</a></p>
 <h1 id="federation">Federation</h1>
 <p><a href="https://prometheus.io/docs/prometheus/latest/federation/">https://prometheus.io/docs/prometheus/latest/federation/</a></p>
 <pre><code>curl -G --data-urlencode 'match[]={__name__=&quot;up&quot;}' http://xxx:9090/federate
@@ -229,6 +230,10 @@ Published on 8 Apr 2020
 <li class=" has-sub-menu"><a href="https://ylroki.github.io/language/">Language<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
+
+<li class=""><a href="https://ylroki.github.io/language/awk/">AWK</a>
+  
+</li>
 
 <li class=""><a href="https://ylroki.github.io/language/ansible/">Ansible</a>
   
