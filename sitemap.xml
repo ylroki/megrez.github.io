@@ -13,7 +13,7 @@
   </url>
   
   <url>
-    <loc>https://ylroki.github.io/kubernetes/etcd/</loc>
+    <loc>https://ylroki.github.io/kubernetes/apiserver/</loc>
     <lastmod>2020-06-06T00:00:00+00:00</lastmod>
   </url>
   
@@ -93,7 +93,7 @@
   </url>
   
   <url>
-    <loc>https://ylroki.github.io/kubernetes/apiserver/</loc>
+    <loc>https://ylroki.github.io/kubernetes/etcd/</loc>
     <lastmod>2020-04-17T00:00:00+00:00</lastmod>
   </url>
   

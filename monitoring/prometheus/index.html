@@ -52,13 +52,83 @@
 <pre><code>curl 'http://127.0.0.1:9090/api/v1/query_range?start=2020-04-23T07:00:00.000Z&amp;end=2020-04-23T08:00:00.000Z&amp;step=15s&amp;query=labels'
 
 curl 'http://127.0.0.1:9090/api/v1/label/__name__/values'|jq .data[]|grep pod
+
+curl -G --data-urlencode 'start=1594714136'  --data-urlencode 'end=1594800536' --data-urlencode 'step=300' --data-urlencode 'query=avg(pod:pod_cpu_usage:rate{namespace=&quot;demo-tt1-sg&quot;,pod_name=&quot;demo-nginx1-7975b4ff4f-v2652&quot;}) by (__name__)' http://xxx:9090/api/v1/query_range
 </code></pre><h1 id="with-kuberneters">With Kuberneters</h1>
 <p><a href="https://github.com/coreos/prometheus-operator">https://github.com/coreos/prometheus-operator</a></p>
 <p><a href="https://github.com/coreos/kube-prometheus">https://github.com/coreos/kube-prometheus</a></p>
 <p><a href="https://brancz.com/2018/02/27/using-kube-rbac-proxy-to-secure-kubernetes-workloads/">https://brancz.com/2018/02/27/using-kube-rbac-proxy-to-secure-kubernetes-workloads/</a></p>
+<h1 id="outside-cluster">Outside Cluster</h1>
+<p><a href="https://www.qikqiak.com/post/monitor-external-k8s-on-prometheus/">https://www.qikqiak.com/post/monitor-external-k8s-on-prometheus/</a></p>
 <h1 id="federation">Federation</h1>
 <p><a href="https://prometheus.io/docs/prometheus/latest/federation/">https://prometheus.io/docs/prometheus/latest/federation/</a></p>
 <pre><code>curl -G --data-urlencode 'match[]={__name__=&quot;up&quot;}' http://xxx:9090/federate
+</code></pre><h1 id="oom-monitoring">OOM Monitoring</h1>
+<p>{_<em>name__=~&quot;container_memory</em>.+&rdquo;,pod=&quot;ske-k8s-test-tools-599bc86547-qxn9j&rdquo;,container=&quot;ske-k8s-test-tools&rdquo;}</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+
+#define BUF_SIZE 1024*1024
+#define MAX_SIZE 100*1024*1024
+
+// watch metrics {__name__=~&quot;container_memory_[^f].+&quot;,container=&quot;ske-k8s-test-tools&quot;}
+int main(int argc, char*argv[]){
+    int fd = open(&quot;data.log&quot;, O_CREAT|O_RDWR);
+    if (fd &lt; 0){
+        printf(&quot;open error\n&quot;);
+        return 0;
+    }
+
+    char buf[BUF_SIZE];
+    memset(buf, 'b', BUF_SIZE);
+
+    // write file raise total_inactive_file
+    int offset = 0;
+    while (1){
+        if (offset &gt;= MAX_SIZE){
+            offset = 0;
+            break; // jump to read
+        }
+        printf(&quot;write file %d...\n&quot;, offset);
+        lseek(fd, offset, SEEK_SET);
+        offset += BUF_SIZE;
+        char*p = malloc(BUF_SIZE);
+        if (p == NULL){
+            write(fd, buf, BUF_SIZE);
+            usleep(1000);
+            continue;
+        }
+        memset(p, 'a', BUF_SIZE);
+        write(fd, p, BUF_SIZE);
+
+        free(p); // comment this line to raise rss
+        usleep(1000);
+    }
+
+    // read file again raise total_active_file
+    while (1){
+        if (offset &gt;= MAX_SIZE){
+            offset = 0;
+        }
+        printf(&quot;read file %d...\n&quot;, offset);
+        lseek(fd, offset, SEEK_SET);
+        offset += BUF_SIZE;
+        char*p = malloc(BUF_SIZE);
+        if (p == NULL){
+            read(fd, buf, BUF_SIZE);
+            usleep(1000);
+            continue;
+        }
+        read(fd, p, BUF_SIZE);
+
+        free(p); // comment this line to raise rss
+        usleep(1000);
+    }
+    return 0;
+}
+
+
 </code></pre><div class="edit-meta">
 Last updated on 8 Apr 2020
 
@@ -156,7 +226,7 @@ Published on 8 Apr 2020
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/etcd/">ETCD</a>
+<li class=""><a href="https://ylroki.github.io/kubernetes/apiserver/">ETCD</a>
   
 </li>
 
@@ -192,7 +262,7 @@ Published on 8 Apr 2020
   
 </li>
 
-<li class=""><a href="https://ylroki.github.io/kubernetes/apiserver/">Apiserver</a>
+<li class=""><a href="https://ylroki.github.io/kubernetes/etcd/">Apiserver</a>
   
 </li>
 
