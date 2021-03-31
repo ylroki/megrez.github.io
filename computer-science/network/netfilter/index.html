@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Build-in Shortcodes - Megrez</title>
-<meta name="description" content="calling built-in Shortcodes into your content files.">
+<title>Netfilter - Megrez</title>
+<meta name="description" content="Personal Knowledge Management">
 <meta name="generator" content="Hugo 0.68.3" />
 <link href="https://ylroki.github.ioindex.xml" rel="alternate" type="application/rss+xml">
-<link rel="canonical" href="https://ylroki.github.io/sample/build-in-shortcodes/">
+<link rel="canonical" href="https://ylroki.github.io/computer-science/network/netfilter/">
 <link rel="stylesheet" href="https://ylroki.github.io/css/theme.min.css">
 <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="stylesheet" href="https://ylroki.github.io/css/chroma.min.css">
@@ -16,28 +16,19 @@
 <script src="https://ylroki.github.io/js/bundle.js"></script><style>
 :root {}
 </style>
-<meta property="og:title" content="Build-in Shortcodes" />
-<meta property="og:description" content="calling built-in Shortcodes into your content files." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://ylroki.github.io/sample/build-in-shortcodes/" />
+<meta property="og:title" content="Netfilter" />
+<meta property="og:description" content="Personal Knowledge Management" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ylroki.github.io/computer-science/network/netfilter/" />
 <meta property="og:image" content="https://ylroki.github.io/images/og-image.png"/>
-<meta property="article:published_time" content="2017-10-17T15:26:15+00:00" />
-<meta property="article:modified_time" content="2017-10-17T15:26:15+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
+<meta property="og:updated_time" content="2020-12-08T00:00:00+00:00" /><meta property="og:site_name" content="Hugo Techdoc Theme" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://ylroki.github.io/images/og-image.png"/>
 
-<meta name="twitter:title" content="Build-in Shortcodes"/>
-<meta name="twitter:description" content="calling built-in Shortcodes into your content files."/>
-<meta itemprop="name" content="Build-in Shortcodes">
-<meta itemprop="description" content="calling built-in Shortcodes into your content files.">
-<meta itemprop="datePublished" content="2017-10-17T15:26:15&#43;00:00" />
-<meta itemprop="dateModified" content="2017-10-17T15:26:15&#43;00:00" />
-<meta itemprop="wordCount" content="38">
-<meta itemprop="image" content="https://ylroki.github.io/images/og-image.png"/>
-
-
-
-<meta itemprop="keywords" content="" /></head>
+<meta name="twitter:title" content="Netfilter"/>
+<meta name="twitter:description" content="Personal Knowledge Management"/>
+<meta itemprop="name" content="Netfilter">
+<meta itemprop="description" content="Personal Knowledge Management"></head>
 <body><div class="container"><header>
 <h1>Megrez</h1>
 
@@ -55,39 +46,19 @@
 </nav>
 </div>
 <div class="content-container">
-<main><h1>Build-in Shortcodes</h1>
-<p>See <a href="https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes">https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes</a></p>
-<h2 id="figure">figure</h2>
-<figure>
-    <img src="/images/pexels-photo-196666.jpeg"/> <figcaption>
-            <h4>2 People Sitting With View of Yellow Flowers during Daytime</h4>
-        </figcaption>
-</figure>
-
-<h2 id="gist">gist</h2>
-<script type="application/javascript" src="https://gist.github.com/spf13/7896402.js?file=img.html"></script>
-
-<h2 id="highlight">highlight</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">section</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
-  &lt;<span style="color:#f92672">div</span>&gt;
-   &lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;title&#34;</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h1</span>&gt;
-    {{ range .Data.Pages }}
-        {{ .Render &#34;summary&#34;}}
-    {{ end }}
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">section</span>&gt;</code></pre></div>
-<h2 id="instagram">instagram</h2>
-<h2 id="tweet">tweet</h2>
-<h2 id="vimeo">vimeo</h2>
-<h2 id="youtube">youtube</h2>
+<main><h1>Netfilter</h1><h1 id="getting-started">Getting Started</h1>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/3/37/Netfilter-packet-flow.svg">https://upload.wikimedia.org/wikipedia/commons/3/37/Netfilter-packet-flow.svg</a></p>
+<p><a href="https://segmentfault.com/a/1190000009043962?utm_source=sf-related">https://segmentfault.com/a/1190000009043962?utm_source=sf-related</a></p>
+<pre><code>return NF_HOOK(
+</code></pre><p>net/netfilter/core.c</p>
 <div class="edit-meta">
-Last updated on 17 Oct 2017
+Last updated on 8 Dec 2020
 
 
 <br>
-Published on 17 Oct 2017
-<br><a href="https://github.com/ylroki/megrez/edit/master/content/sample/build-in-shortcodes.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/sample/" title="Sample Document"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Sample Document</a>
-<a class="nav nav-next" href="https://ylroki.github.io/sample/custom-shortcodes/" title="Custom Shortcodes">Next - Custom Shortcodes <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+Published on 8 Dec 2020
+<br><a href="https://github.com/ylroki/megrez/edit/master/content/computer-science/network/netfilter/_index.md" class="edit-page"><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class="pagination"><a class="nav nav-prev" href="https://ylroki.github.io/computer-science/network/" title="Network"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Network</a>
+<a class="nav nav-next" href="https://ylroki.github.io/computer-science/storage/" title="Storage">Next - Storage <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
 </nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
 </footer>
 </main><div class="sidebar">
@@ -143,15 +114,15 @@ Published on 17 Oct 2017
   
 </li>
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/computer-science/">Computer Science<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/computer-science/">Computer Science<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
-<li class=" has-sub-menu"><a href="https://ylroki.github.io/computer-science/network/">Network<span class="mark closed">+</span></a>
+<li class="parent has-sub-menu"><a href="https://ylroki.github.io/computer-science/network/">Network<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
 
-<li class=""><a href="https://ylroki.github.io/computer-science/network/netfilter/">Netfilter</a>
+<li class="parent active"><a href="https://ylroki.github.io/computer-science/network/netfilter/">Netfilter</a>
   
 </li>
 </ul>
@@ -389,10 +360,10 @@ Published on 17 Oct 2017
   
 </li>
 
-<li class="parent has-sub-menu"><a href="https://ylroki.github.io/sample/">Sample Document<span class="mark opened">-</span></a>
+<li class=" has-sub-menu"><a href="https://ylroki.github.io/sample/">Sample Document<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
-<li class="active"><a href="https://ylroki.github.io/sample/build-in-shortcodes/">Build-in Shortcodes</a></li>
+<li class=""><a href="https://ylroki.github.io/sample/build-in-shortcodes/">Build-in Shortcodes</a></li>
 <li class=""><a href="https://ylroki.github.io/sample/custom-shortcodes/">Custom Shortcodes</a></li>
 <li class=""><a href="https://ylroki.github.io/sample/table-of-contents/">Table of Contents</a></li>
 <li class=""><a href="https://ylroki.github.io/sample/search-shortcode/">Search Shortcode</a></li>

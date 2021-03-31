@@ -13,6 +13,16 @@
   </url>
   
   <url>
+    <loc>https://ylroki.github.io/kubernetes/storage/</loc>
+    <lastmod>2021-03-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ylroki.github.io/computer-science/network/netfilter/</loc>
+    <lastmod>2020-12-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ylroki.github.io/kubernetes/apiserver/</loc>
     <lastmod>2020-06-06T00:00:00+00:00</lastmod>
   </url>
